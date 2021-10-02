@@ -11,9 +11,10 @@ public class Driver {
 		CustomerAccount account = menuController.getAccount();
 		
 		while (account != null) {
-			System.out.println(account.getName());
-			System.out.println(account.getAccountID());
-			System.out.println(account.getBalance());
+			System.out.println();
+			System.out.println("Account name: " + account.getName());
+			System.out.println("Account ID: " + account.getAccountID());
+			System.out.println("Account balance: " + account.getBalance());
 			
 			account = null;
 		}

@@ -8,8 +8,8 @@ import com.revature.services.CustomerService;
 
 public class MenuController {
 	
-	private static Scanner scan = new Scanner(System.in);
 	private static CustomerService customerService = new CustomerService();
+	Scanner scan = createScanner();
 
 	public CustomerAccount getAccount() {
 		System.out.println("Please choose an option: ");		
@@ -24,7 +24,7 @@ public class MenuController {
 		
 		switch (response) {
 			case 1:
-				account = buildAccount();
+				account = buildAccount(account);
 				break;
 	//		case 2:
 	//			deposit();
@@ -43,8 +43,9 @@ public class MenuController {
 		return account;
 	}
 	
-	public CustomerAccount buildAccount() {
-		CustomerAccount account = null;
+	public CustomerAccount buildAccount(CustomerAccount account) {
+		scan = createScanner();
+
 		System.out.println("What is your name?");
 		String name = scan.nextLine();
 		String accountID = UUID.randomUUID().toString();
@@ -53,6 +54,17 @@ public class MenuController {
 		
 		return account;
 		
+	}
+
+
+	/**
+	 * Helper method to create Scanner objects
+	 * @return ScannerObject
+	 */
+	public Scanner createScanner(){
+		Scanner scan = new Scanner(System.in);
+		
+		return scan;
 	}
 	
 }
