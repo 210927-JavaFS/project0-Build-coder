@@ -1,15 +1,23 @@
 package com.revature.services;
 
-import com.revature.daos.CustomerDAO;
+import java.util.ArrayList;
 import com.revature.models.CustomerAccount;
 
 public class CustomerService {
-	
-	private static CustomerDAO customerDAO = new CustomerDAO();
-	
+
+	private ArrayList<CustomerAccount> allAccounts = new ArrayList<>();
+
+		
 	public CustomerAccount createAccount(String name, String accountID, int balance) {
-			
-//		CustomerAccount account = new CustomerAccount(name, accountID, balance);
 		return new CustomerAccount(name, accountID, balance);
 	}
+
+	public void addDeposit(CustomerAccount account, int amount) {
+		account.setBalance(account.getBalance() + amount);
+	}
+
+    public void addToList(CustomerAccount account){
+        allAccounts.add(account);
+    }
+
 }
