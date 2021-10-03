@@ -3,20 +3,49 @@ package com.revature.controllers;
 import java.util.Scanner;
 import java.util.UUID;
 
-import com.revature.models.CustomerAccount;
+import com.revature.models.Account;
+import com.revature.models.Customer;
+import com.revature.services.AccountService;
 import com.revature.services.CustomerService;
 
 public class MenuController {
 	
 	private static CustomerService customerService = new CustomerService();
+	private static AccountService accountService = new AccountService();
+	private static boolean running = true;
 	Scanner scan = createScanner();
 
-	public void mainMenu(){
-		boolean running = true;
-
+	public void logIn(){
 		do {
+			String name, password, id;
+
+			System.out.println("Please enter your name: ");
+			name = scan.nextLine();
+			System.out.println("Please enter your password: ");
+			password = scan.nextLine();
+			id = UUID.randomUUID().toString();
+
+			if (!(name.isEmpty() || password.isEmpty())) {
+				Customer customer = customerService.createAccount(name,password,id);
+				customerService.addToList(customer);
+				System.out.println();
+				System.out.println("Congrats, you have created a user account");
+				running = false;
+			} else {
+				System.out.println();
+				System.out.println("Name and/or password is incomplete. Try again");
+				System.out.println();
+			}
+		} while(running);
+
+		running = true;
+	}
+
+	public void mainMenu(){
+		do {
+			System.out.println();
 			System.out.println("Please choose an option: ");		
-			System.out.println("1: Create an account");
+			System.out.println("1: Create a bank account");
 			System.out.println("2: Deposit");
 			System.out.println("3: Withdraw");
 			System.out.println("4: Transfer");
@@ -26,13 +55,17 @@ public class MenuController {
 			
 			switch (response) {
 				case 1:
-					CustomerAccount account = null;
-					buildAccount(account);
-					customerService.addToList(account);
+					Scanner scan = createScanner();
+					System.out.println("What is your name?");
+					String name = scan.nextLine();
+					Account account = null;
+					account = buildBankAccount(account, name);
+					accountService.addToList(account);
 					break;
 				case 2:
-					deposit(account);
-					break;
+					// find customer account
+					// deposit(account);
+					// break;
 		//		case 3:
 		//			withdraw();
 		//			break;
@@ -47,22 +80,20 @@ public class MenuController {
 		} while (running);
 	}
 	
-	public void buildAccount(CustomerAccount account) {
-		scan = createScanner();
-
-		System.out.println("What is your name?");
-		String name = scan.nextLine();
+	public Account buildBankAccount(Account account, String name) {
 		String accountID = UUID.randomUUID().toString();
 		int balance = 0;
-		account=customerService.createAccount(name,accountID,balance);
+		account=accountService.createAccount(name,accountID,balance);
+
+		return account;
 	}
 
-	public void deposit(CustomerAccount account) {
+	public void deposit(Account account) {
 		scan = createScanner();
 
 		System.out.println("How much do you want to deposit?");
 		int amount = scan.nextInt();
-		customerService.addDeposit(account, amount);
+		accountService.addDeposit(account, amount);
 	}
 
 	/**
