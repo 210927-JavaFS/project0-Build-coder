@@ -31,6 +31,7 @@ public class CustomerController extends MenuController {
 			System.out.println("2: Deposit");
 			System.out.println("3: Withdraw");
 			System.out.println("4: Transfer");
+			System.out.println("5: View Accounts");
 			System.out.println("Enter any key that's not 1-4 to quit");
 			System.out.println();
 			
@@ -44,25 +45,25 @@ public class CustomerController extends MenuController {
                     System.out.println("Congrats " + name + "! You opened a new bank account");
 					break;
 				case 2:
-					System.out.println("Which account would you like to deposit money in?");
-					viewAccounts(bankAccounts);
-					int i = scan.nextInt();
-					System.out.println("How much would you like to deposit?");
-					int amount = scan.nextInt();
-					accountService.addDeposit(bankAccounts.get(i), amount);
+					deposit(bankAccounts);
 					break;
-				// case 3:
-				// 	withdraw();
-				// 	break;
-		//		case 4:
-		//			transfer();
-		//			break;
+				case 3:
+					withdraw(bankAccounts);
+					break;
+				case 4:
+					transfer(bankAccounts);
+					break;
+				case 5:
+					viewAccounts(bankAccounts);
+					break;
 		
 				default:
 					System.out.println("Exited customer interface");
 					running = false;
 			}	
 		} while (running);
+
+		running = true;
 	}
 	
 	public Account buildBankAccount(Account account, String name) {
@@ -71,6 +72,37 @@ public class CustomerController extends MenuController {
 		account=accountService.createAccount(name,accountID,balance);
 
 		return account;
+	}
+	
+	public void deposit(ArrayList<Account> bankAccounts){
+		System.out.println("Which account would you like to deposit money in?");
+		viewAccounts(bankAccounts);
+		int i = scan.nextInt();
+		System.out.println("How much would you like to deposit?");
+		int amount = scan.nextInt();
+		accountService.add(bankAccounts.get(i), amount);
+	}
+
+	public void withdraw(ArrayList<Account> bankAccounts){
+		System.out.println("Which account do you want to withdraw from?");
+		viewAccounts(bankAccounts);
+		int i = scan.nextInt();
+		System.out.println("How much would you like to withdraw?");
+		int amount = scan.nextInt();
+		accountService.subtract(bankAccounts.get(i), amount);
+	}
+
+	public void transfer(ArrayList<Account> bankAccounts){
+		System.out.println("Which account do you want to transfer money from?");
+		viewAccounts(bankAccounts);
+		int i = scan.nextInt();
+		System.out.println("Which account would you like to transfer the money to?");
+		viewAccounts(bankAccounts);
+		int j = scan.nextInt();
+		System.out.println("How much would you like to transfer?");
+		int amount = scan.nextInt();
+		accountService.subtract(bankAccounts.get(i), amount);
+		accountService.add(bankAccounts.get(j), amount);
 	}
 
 	@Override

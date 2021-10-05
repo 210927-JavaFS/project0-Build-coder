@@ -12,12 +12,11 @@ import com.revature.controllers.CustomerController;
 // temporarily using models in this class
 import com.revature.models.*;
 
-
 public class Driver {
 
 	public static void main(String[] args) {
 
-		// since we have yet to implement a database, I'm gonna
+		// since we have yet to set up a database, I'm gonna
 		// store the lists of bank accounts and customer accounts here
 		// temporarily
 		ArrayList<Customer> customerAccounts = new ArrayList<>();

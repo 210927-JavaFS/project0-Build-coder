@@ -11,8 +11,12 @@ public class AccountService {
 		return new Account(name, accountID, balance);
 	}
 
-	public void addDeposit(Account account, int amount) {
+	public void add(Account account, int amount) {
 		account.setBalance(account.getBalance() + amount);
+	}
+
+	public void subtract(Account account, int amount) {
+		account.setBalance(account.getBalance() - amount);
 	}
 
     public void addToList(Account x, ArrayList<Account>bankAccounts){

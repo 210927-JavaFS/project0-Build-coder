@@ -43,6 +43,9 @@ public abstract class MenuController {
 		} while(running);
 
 		running = true;
+		// won't ever return this empty String. 
+		// just need to have it to satisfy 
+		// compiler cause method returns a String: name
 		return "";
 	}
 
