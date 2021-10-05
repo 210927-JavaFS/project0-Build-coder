@@ -3,15 +3,19 @@ package com.revature.controllers;
 import java.util.Scanner;
 import java.util.UUID;
 
-import com.revature.models.Account;
 import com.revature.models.Customer;
-import com.revature.services.AccountService;
 import com.revature.services.CustomerService;
 
-public class MenuController {
-	
+/**
+ * Customers should be able to register with a user name and password, 
+ * and appy to open an account
+ * 
+ * Once the account has been approved, customers should be able to 
+ * withdraw/deposit/transfer funds between their accounts
+ */
+public abstract class MenuController {
+
 	private static CustomerService customerService = new CustomerService();
-	private static AccountService accountService = new AccountService();
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
@@ -41,61 +45,8 @@ public class MenuController {
 		running = true;
 	}
 
-	public void mainMenu(){
-		do {
-			System.out.println();
-			System.out.println("Please choose an option: ");		
-			System.out.println("1: Create a bank account");
-			System.out.println("2: Deposit");
-			System.out.println("3: Withdraw");
-			System.out.println("4: Transfer");
-			System.out.println("5: Exit");
-			
-			int response = scan.nextInt();
-			
-			switch (response) {
-				case 1:
-					Scanner scan = createScanner();
-					System.out.println("What is your name?");
-					String name = scan.nextLine();
-					Account account = null;
-					account = buildBankAccount(account, name);
-					accountService.addToList(account);
-					break;
-				case 2:
-					// find customer account
-					// deposit(account);
-					// break;
-		//		case 3:
-		//			withdraw();
-		//			break;
-		//		case 4:
-		//			transfer();
-		//			break;
-		
-				default:
-					System.out.println("Thank you, have a good day!");
-					running = false;
-			}	
-		} while (running);
-	}
+	public abstract void mainMenu();
 	
-	public Account buildBankAccount(Account account, String name) {
-		String accountID = UUID.randomUUID().toString();
-		int balance = 0;
-		account=accountService.createAccount(name,accountID,balance);
-
-		return account;
-	}
-
-	public void deposit(Account account) {
-		scan = createScanner();
-
-		System.out.println("How much do you want to deposit?");
-		int amount = scan.nextInt();
-		accountService.addDeposit(account, amount);
-	}
-
 	/**
 	 * Helper method to create a Scanner object
 	 * @return ScannerObject
@@ -105,5 +56,4 @@ public class MenuController {
 		
 		return scan;
 	}
-	
 }
