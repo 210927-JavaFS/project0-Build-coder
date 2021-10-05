@@ -22,8 +22,8 @@ public class CustomerController extends MenuController {
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
-    // @Override
-	public void mainMenu(ArrayList<Account>bankAccounts){
+    @Override
+	public void mainMenu(String name, ArrayList<Account>bankAccounts){
 		do { // customer functionality
 			System.out.println();
 			System.out.println("Please choose an option: ");		
@@ -38,15 +38,19 @@ public class CustomerController extends MenuController {
 			
 			switch (response) {
 				case 1:
-					Scanner scan = createScanner();
-					System.out.println("What is your name?");
-					String name = scan.nextLine();
+					// Scanner scan = createScanner();
+					// System.out.println("What is your name?");
+					// String name = scan.nextLine();
 					Account account = null;
 					account = buildBankAccount(account, name);
 					accountService.addToList(account, bankAccounts);
-                    System.out.println("Congrats " + name + "! You opened a new account");
+                    System.out.println("Congrats " + name + "! You opened a new bank account");
 					break;
 				case 2:
+					System.out.println("Which account would you like to deposit money in?");
+					viewAccounts(bankAccounts);
+					Scanner scan = createScanner();
+					int accountNum = scan.nextInt();
 					// find customer account
 					// deposit(account);
 					// break;
@@ -78,5 +82,19 @@ public class CustomerController extends MenuController {
 		System.out.println("How much do you want to deposit?");
 		int amount = scan.nextInt();
 		accountService.addDeposit(account, amount);
-	}	
+	}
+
+	@Override
+	public void viewAccounts(ArrayList<Account> bankAccounts) {
+		int count = 0;
+
+		for (Account account : bankAccounts) {
+			System.out.print(count + ": ");
+			System.out.print(account);
+			System.out.println();
+			count++;
+		}
+	}
+
+
 }

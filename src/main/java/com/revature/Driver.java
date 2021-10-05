@@ -39,12 +39,13 @@ public class Driver {
 			System.out.println();
 			
 			int response = scan.nextInt();
+			String name;
 			
 			switch (response) {
 				case 1:
 					CustomerController customerController = new CustomerController();
-					customerController.logIn(customerAccounts);
-					customerController.mainMenu(bankAccounts);
+					name = customerController.logIn(customerAccounts);
+					customerController.mainMenu(name, bankAccounts);
 					break;
 
 				// case 2:

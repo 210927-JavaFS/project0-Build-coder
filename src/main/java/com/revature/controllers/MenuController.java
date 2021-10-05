@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import com.revature.models.Customer;
 import com.revature.services.CustomerService;
 
+// temporarily using models in this class
+import com.revature.models.*;
+
 public abstract class MenuController {
 
 	private static CustomerService customerService = new CustomerService();
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
-	public void logIn(ArrayList<Customer>customerAccounts){
+	public String logIn(ArrayList<Customer>customerAccounts){
 		do {
 			String name, password, id;
 
@@ -29,8 +32,9 @@ public abstract class MenuController {
 				Customer customer = customerService.createAccount(name,password,id);
 				customerService.addToList(customer, customerAccounts);
 				System.out.println();
-				System.out.println("Congrats, you have created a user account");
+				System.out.println("Congrats " + name + " you have created a user account");
 				running = false;
+				return name;
 			} else {
 				System.out.println();
 				System.out.println("Name and/or password is incomplete. Try again");
@@ -39,9 +43,11 @@ public abstract class MenuController {
 		} while(running);
 
 		running = true;
+		return "";
 	}
 
-	// public abstract void mainMenu(customerAcccounts, bankAccounts);
+	public abstract void mainMenu(String name, ArrayList<Account>bankAccounts);
+	public abstract void viewAccounts(ArrayList<Account>bankAccounts);
 	
 	/**
 	 * Helper method to create a Scanner object
