@@ -11,7 +11,8 @@ public class CustomerService {
 		return new Customer(name, password, id);
 	}
 
-    public void addToList(Customer x){
-		allAccounts.add(x);
+    public void addToList(Customer x, ArrayList<Customer>customerAccounts){
+		// allAccounts.add(x);
+		customerAccounts.add(x);
     }
 }

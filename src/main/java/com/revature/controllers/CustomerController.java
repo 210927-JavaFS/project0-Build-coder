@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import com.revature.models.Account;
 import com.revature.services.AccountService;
+
+// temporarily using Array's in this class
+import java.util.ArrayList;
 	
 /**
  * Customers should be able to register with a user name and password, 
@@ -20,7 +23,7 @@ public class CustomerController extends MenuController {
 	Scanner scan = createScanner();
 
     // @Override
-	public void mainMenu(){
+	public void mainMenu(ArrayList<Account>bankAccounts){
 		do { // customer functionality
 			System.out.println();
 			System.out.println("Please choose an option: ");		
@@ -40,7 +43,7 @@ public class CustomerController extends MenuController {
 					String name = scan.nextLine();
 					Account account = null;
 					account = buildBankAccount(account, name);
-					accountService.addToList(account);
+					accountService.addToList(account, bankAccounts);
                     System.out.println("Congrats " + name + "! You opened a new account");
 					break;
 				case 2:

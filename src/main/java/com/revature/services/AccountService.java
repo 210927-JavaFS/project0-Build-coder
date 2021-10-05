@@ -15,7 +15,8 @@ public class AccountService {
 		account.setBalance(account.getBalance() + amount);
 	}
 
-    public void addToList(Account x){
-		allAccounts.add(x);
+    public void addToList(Account x, ArrayList<Account>bankAccounts){
+		// allAccounts.add(x);
+		bankAccounts.add(x);
     }
 }

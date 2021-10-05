@@ -3,23 +3,19 @@ package com.revature.controllers;
 import java.util.Scanner;
 import java.util.UUID;
 
+// temporarily using Array's in this class
+import java.util.ArrayList;
+
 import com.revature.models.Customer;
 import com.revature.services.CustomerService;
 
-/**
- * Customers should be able to register with a user name and password, 
- * and appy to open an account
- * 
- * Once the account has been approved, customers should be able to 
- * withdraw/deposit/transfer funds between their accounts
- */
 public abstract class MenuController {
 
 	private static CustomerService customerService = new CustomerService();
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
-	public void logIn(){
+	public void logIn(ArrayList<Customer>customerAccounts){
 		do {
 			String name, password, id;
 
@@ -31,7 +27,7 @@ public abstract class MenuController {
 
 			if (!(name.isEmpty() || password.isEmpty())) {
 				Customer customer = customerService.createAccount(name,password,id);
-				customerService.addToList(customer);
+				customerService.addToList(customer, customerAccounts);
 				System.out.println();
 				System.out.println("Congrats, you have created a user account");
 				running = false;
@@ -45,7 +41,7 @@ public abstract class MenuController {
 		running = true;
 	}
 
-	public abstract void mainMenu();
+	// public abstract void mainMenu(customerAcccounts, bankAccounts);
 	
 	/**
 	 * Helper method to create a Scanner object
