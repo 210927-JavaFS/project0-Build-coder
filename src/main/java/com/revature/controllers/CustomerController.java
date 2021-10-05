@@ -38,9 +38,6 @@ public class CustomerController extends MenuController {
 			
 			switch (response) {
 				case 1:
-					// Scanner scan = createScanner();
-					// System.out.println("What is your name?");
-					// String name = scan.nextLine();
 					Account account = null;
 					account = buildBankAccount(account, name);
 					accountService.addToList(account, bankAccounts);
@@ -49,14 +46,14 @@ public class CustomerController extends MenuController {
 				case 2:
 					System.out.println("Which account would you like to deposit money in?");
 					viewAccounts(bankAccounts);
-					Scanner scan = createScanner();
-					int accountNum = scan.nextInt();
-					// find customer account
-					// deposit(account);
-					// break;
-		//		case 3:
-		//			withdraw();
-		//			break;
+					int i = scan.nextInt();
+					System.out.println("How much would you like to deposit?");
+					int amount = scan.nextInt();
+					accountService.addDeposit(bankAccounts.get(i), amount);
+					break;
+				// case 3:
+				// 	withdraw();
+				// 	break;
 		//		case 4:
 		//			transfer();
 		//			break;
@@ -76,14 +73,6 @@ public class CustomerController extends MenuController {
 		return account;
 	}
 
-	public void deposit(Account account) {
-		scan = createScanner();
-
-		System.out.println("How much do you want to deposit?");
-		int amount = scan.nextInt();
-		accountService.addDeposit(account, amount);
-	}
-
 	@Override
 	public void viewAccounts(ArrayList<Account> bankAccounts) {
 		int count = 0;
@@ -91,10 +80,8 @@ public class CustomerController extends MenuController {
 		for (Account account : bankAccounts) {
 			System.out.print(count + ": ");
 			System.out.print(account);
-			System.out.println();
+			System.out.println(": $" + account.getBalance());
 			count++;
 		}
 	}
-
-
 }
