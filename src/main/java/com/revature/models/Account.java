@@ -1,18 +1,31 @@
 package com.revature.models;
 
+import java.util.HashMap;
+
+
 public class Account {
     private String name;
 	private String accountID;
 	private int balance;
+	private HashMap<String, String> map = new HashMap<String, String>();
 
 	public Account(String name, String accountID, int balance) {
 		this.name = name;
 		this.accountID = accountID;
 		this.balance = balance;
+		this.map.put(name, accountID);
 	}
 	
 	Account(){
 		super();
+	}
+
+	public HashMap<String, String> getMap(String string) {
+		return map;
+	}
+
+	public void setMap(HashMap<String, String> map) {
+		this.map = map;
 	}
 
 	public String getName() {

@@ -48,9 +48,6 @@ public abstract class MenuController {
 		// compiler cause method returns a String: name
 		return "";
 	}
-
-	public abstract void mainMenu(String name, ArrayList<Account>bankAccounts);
-	public abstract void viewAccounts(ArrayList<Account>bankAccounts);
 	
 	/**
 	 * Helper method to create a Scanner object
@@ -61,4 +58,7 @@ public abstract class MenuController {
 		
 		return scan;
 	}
+
+	public abstract void mainMenu(String name, ArrayList<Account>bankAccounts);
+	public abstract void viewAccounts(ArrayList<Account> bankAccounts);
 }

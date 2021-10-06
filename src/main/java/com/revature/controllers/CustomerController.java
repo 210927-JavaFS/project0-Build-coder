@@ -20,6 +20,8 @@ public class CustomerController extends MenuController {
 
 	private static AccountService accountService = new AccountService();
 	private static boolean running = true;
+	private static ArrayList<Account> customerAccounts = new ArrayList<>();
+
 	Scanner scan = createScanner();
 
     @Override
@@ -43,18 +45,19 @@ public class CustomerController extends MenuController {
 					account = buildBankAccount(account, name);
 					accountService.addToList(account, bankAccounts);
                     System.out.println("Congrats " + name + "! You opened a new bank account");
+					buildCustomerAccounts(bankAccounts, name);
 					break;
 				case 2:
-					deposit(bankAccounts);
+					deposit(customerAccounts);
 					break;
 				case 3:
-					withdraw(bankAccounts);
+					withdraw(customerAccounts);
 					break;
 				case 4:
-					transfer(bankAccounts);
+					transfer(customerAccounts);
 					break;
 				case 5:
-					viewAccounts(bankAccounts);
+					viewAccounts(customerAccounts);
 					break;
 		
 				default:
@@ -67,49 +70,60 @@ public class CustomerController extends MenuController {
 	}
 	
 	public Account buildBankAccount(Account account, String name) {
+
 		String accountID = UUID.randomUUID().toString();
 		int balance = 0;
 		account=accountService.createAccount(name,accountID,balance);
 
 		return account;
 	}
+
+	public void buildCustomerAccounts(ArrayList<Account> bankAccounts, String name) {
+
+		for (Account account : bankAccounts) {
+			String account_name = account.getName();
+			if (name == account_name) {
+				customerAccounts.add(account);
+			}
+		}
+	}
 	
-	public void deposit(ArrayList<Account> bankAccounts){
+	public void deposit(ArrayList<Account> customerAccounts){
 		System.out.println("Which account would you like to deposit money in?");
-		viewAccounts(bankAccounts);
+		viewAccounts(customerAccounts);
 		int i = scan.nextInt();
 		System.out.println("How much would you like to deposit?");
 		int amount = scan.nextInt();
-		accountService.add(bankAccounts.get(i), amount);
+		accountService.add(customerAccounts.get(i), amount);
 	}
 
-	public void withdraw(ArrayList<Account> bankAccounts){
+	public void withdraw(ArrayList<Account> customerAccounts){
 		System.out.println("Which account do you want to withdraw from?");
-		viewAccounts(bankAccounts);
+		viewAccounts(customerAccounts);
 		int i = scan.nextInt();
 		System.out.println("How much would you like to withdraw?");
 		int amount = scan.nextInt();
-		accountService.subtract(bankAccounts.get(i), amount);
+		accountService.subtract(customerAccounts.get(i), amount);
 	}
 
-	public void transfer(ArrayList<Account> bankAccounts){
+	public void transfer(ArrayList<Account> customerAccounts){
 		System.out.println("Which account do you want to transfer money from?");
-		viewAccounts(bankAccounts);
+		viewAccounts(customerAccounts);
 		int i = scan.nextInt();
 		System.out.println("Which account would you like to transfer the money to?");
-		viewAccounts(bankAccounts);
+		viewAccounts(customerAccounts);
 		int j = scan.nextInt();
 		System.out.println("How much would you like to transfer?");
 		int amount = scan.nextInt();
-		accountService.subtract(bankAccounts.get(i), amount);
-		accountService.add(bankAccounts.get(j), amount);
+		accountService.subtract(customerAccounts.get(i), amount);
+		accountService.add(customerAccounts.get(j), amount);
 	}
 
 	@Override
-	public void viewAccounts(ArrayList<Account> bankAccounts) {
+	public void viewAccounts(ArrayList<Account> customerAccounts) {
 		int count = 0;
 
-		for (Account account : bankAccounts) {
+		for (Account account : customerAccounts) {
 			System.out.print(count + ": ");
 			System.out.print(account);
 			System.out.println(": $" + account.getBalance());
