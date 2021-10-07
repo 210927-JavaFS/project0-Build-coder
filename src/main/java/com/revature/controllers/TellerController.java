@@ -15,7 +15,7 @@ import com.revature.models.Customer;
 public class TellerController extends UtilityController{
 
 	@Override
-	public void mainMenu(String name, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
+	public void menu(String name, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
 		scan = createScanner();
 		boolean running = true;
 

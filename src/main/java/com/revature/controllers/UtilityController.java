@@ -153,5 +153,5 @@ public abstract class UtilityController {
 		return scan;
 	}
 
-	public abstract void mainMenu(String name, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles);
+	public abstract void menu(String name, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles);
 }

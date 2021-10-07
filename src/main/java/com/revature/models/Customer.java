@@ -21,10 +21,10 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     }
-    public String getPassoword() {
+    public String getPassword() {
         return password;
     }
-    public void setPassoword(String passoword) {
+    public void setPassword(String passoword) {
         this.password = passoword;
     }
     public String getId() {

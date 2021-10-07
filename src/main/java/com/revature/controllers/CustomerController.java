@@ -25,7 +25,7 @@ public class CustomerController extends UtilityController {
 	Scanner scan = createScanner();
 
     @Override
-	public void mainMenu(String name, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles){
+	public void menu(String name, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles){
 		do { 
 			System.out.println();
 			System.out.println("Please choose an option: ");		
