@@ -1,72 +1,67 @@
 package com.revature.controllers;
 
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.ArrayList;
 
 import com.revature.models.Account;
-import com.revature.services.AccountService;
+import com.revature.models.Customer;
 
-public class ManagerController extends MenuController {
+/**
+ * Employees of the bank should be able to view the
+ * customer's login account and banking account(s)
+ *
+ * Employees of the bank should be able to approve/deny 
+ * open applications for accounts. 
+ * 
+ * Bank admins should be able to withdraw/deposit/transfer
+ * Cancel accounts 
+ */
+public class ManagerController extends UtilityController {
 
-    private static AccountService accountService = new AccountService();
-	private static boolean running = true;
-	Scanner scan = createScanner();
+	@Override
+	public void mainMenu(String name, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
+		scan = createScanner();
+		boolean running = true;
 
-    @Override
-	public void mainMenu(){
-		do { // customer functionality
+		do { 
 			System.out.println();
 			System.out.println("Please choose an option: ");		
-			System.out.println("1: Create a bank account");
-			System.out.println("2: Deposit");
-			System.out.println("3: Withdraw");
-			System.out.println("4: Transfer");
-			System.out.println("Enter any key that's not 1-4 to quit");
+			System.out.println("1: Approve/Deny an Application");
+			System.out.println("2: View Customer Account");
+			System.out.println("3: View Bank Account");
+			System.out.println("4: Deposit");
+			System.out.println("5: Withdraw");
+			System.out.println("6: Transfer");
+			System.out.println("Enter any key that's not 1-3 to quit");
 			System.out.println();
 			
 			int response = scan.nextInt();
 			
 			switch (response) {
 				case 1:
-					Scanner scan = createScanner();
-					System.out.println("What is your name?");
-					String name = scan.nextLine();
-					Account account = null;
-					account = buildBankAccount(account, name);
-					accountService.addToList(account);
-                    scan.close();
+					// first account in the list hard coded is for now
+					approveAccount(bankAccounts.get(0));
 					break;
 				case 2:
-					// find customer account
-					// deposit(account);
-					// break;
-		//		case 3:
-		//			withdraw();
-		//			break;
-		//		case 4:
-		//			transfer();
-		//			break;
-		
+					viewProfiles(profiles);
+					break;
+				case 3:
+					viewAccounts(bankAccounts);
+					break;
+				case 4:
+					deposit(bankAccounts);
+					break;
+				case 5:
+					withdraw(bankAccounts);
+					break;
+				case 6:
+					transfer(bankAccounts);
+					break;
 				default:
-					System.out.println("Thank you, have a good day!");
+					System.out.println("Exited manager interface");
 					running = false;
 			}	
 		} while (running);
+
+		running = true;
 	}
-	
-	public Account buildBankAccount(Account account, String name) {
-		String accountID = UUID.randomUUID().toString();
-		int balance = 0;
-		account=accountService.createAccount(name,accountID,balance);
-
-		return account;
-	}
-
-	public void deposit(Account account) {
-		scan = createScanner();
-
-		System.out.println("How much do you want to deposit?");
-		int amount = scan.nextInt();
-		accountService.addDeposit(account, amount);
-	}	
 }

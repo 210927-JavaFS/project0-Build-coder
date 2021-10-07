@@ -21,8 +21,6 @@ public class Driver {
 		// temporarily
 		ArrayList<Customer> customerProfiles = new ArrayList<>();
 		ArrayList<Account> bankAccounts = new ArrayList<>();
-		ArrayList<Account> customerAccounts = new ArrayList<>();
-
 
 		boolean running = true;
 
@@ -46,18 +44,26 @@ public class Driver {
 				case 1:
 					CustomerController customerController = new CustomerController();
 					name = customerController.logIn(customerProfiles);
-					customerController.mainMenu(name, bankAccounts, customerAccounts);
+					customerController.mainMenu(name, bankAccounts, customerProfiles);
 					break;
 
-				// case 2:
-				// 	TellerController tellerController = new TellerController();
-				// 	tellerController.mainMenu(customerAccounts, bankAccounts);
-				// 	break;
+				case 2:
+					/**
+					 * Will take out CustomerControllers from this case and one below. 
+					 * Just want to make sure utility methods work in both cases
+					 */
+					CustomerController customerController2 = new CustomerController();
+					name = customerController2.logIn(customerProfiles);
+					TellerController tellerController = new TellerController();
+					tellerController.mainMenu(name, bankAccounts, customerProfiles);
+					break;
 
-				// case 3:
-				// 	ManagerController managerController = new ManagerController();
-				// 	managerController.mainMenu(customerAccounts, bankAccounts);
-				// 	break;
+				case 3:
+					CustomerController customerController3 = new CustomerController();
+					name = customerController3.logIn(customerProfiles);
+					ManagerController managerController = new ManagerController();
+					managerController.mainMenu(name, bankAccounts, customerProfiles);
+					break;
 
 				default:
 					System.out.println("Thank you, have a good day!");
