@@ -15,7 +15,7 @@ import com.revature.models.Account;
 public class TellerController extends MenuController{
 
 	@Override
-	public void mainMenu(String name, ArrayList<Account> bankAccounts) {
+	public void mainMenu(String name, ArrayList<Account> bankAccounts, ArrayList<Account> customerAccounts) {
 		
 	}
 

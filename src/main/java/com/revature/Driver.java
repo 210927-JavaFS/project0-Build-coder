@@ -19,8 +19,10 @@ public class Driver {
 		// since we have yet to set up a database, I'm gonna
 		// store the lists of bank accounts and customer accounts here
 		// temporarily
-		ArrayList<Customer> customerAccounts = new ArrayList<>();
+		ArrayList<Customer> customerProfiles = new ArrayList<>();
 		ArrayList<Account> bankAccounts = new ArrayList<>();
+		ArrayList<Account> customerAccounts = new ArrayList<>();
+
 
 		boolean running = true;
 
@@ -43,8 +45,8 @@ public class Driver {
 			switch (response) {
 				case 1:
 					CustomerController customerController = new CustomerController();
-					name = customerController.logIn(customerAccounts);
-					customerController.mainMenu(name, bankAccounts);
+					name = customerController.logIn(customerProfiles);
+					customerController.mainMenu(name, bankAccounts, customerAccounts);
 					break;
 
 				// case 2:

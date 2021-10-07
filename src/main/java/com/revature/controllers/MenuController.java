@@ -6,7 +6,6 @@ import java.util.UUID;
 // temporarily using Array's in this class
 import java.util.ArrayList;
 
-import com.revature.models.Customer;
 import com.revature.services.CustomerService;
 
 // temporarily using models in this class
@@ -48,6 +47,31 @@ public abstract class MenuController {
 		// compiler cause method returns a String: name
 		return "";
 	}
+
+	public void removeDuplicates(ArrayList<Account> customerAccounts){
+        // create a temp list
+        ArrayList<Account> newList = new ArrayList<Account>();
+  
+        // traverse through temp list
+        for (Account element : customerAccounts) {
+  
+            // if not a repeat, add it to temp list
+            if (!newList.contains(element)) {
+                newList.add(element);
+            }
+        }
+  
+		// remove list with repeats
+		customerAccounts.clear();
+
+		// rebuild customerAccounts with no repeats
+		for (Account account : newList) {
+			customerAccounts.add(account);
+		}
+
+		// clear temp list
+		newList.clear();
+    }
 	
 	/**
 	 * Helper method to create a Scanner object
@@ -59,6 +83,6 @@ public abstract class MenuController {
 		return scan;
 	}
 
-	public abstract void mainMenu(String name, ArrayList<Account>bankAccounts);
+	public abstract void mainMenu(String name, ArrayList<Account>bankAccounts, ArrayList<Account>customerAccounts);
 	public abstract void viewAccounts(ArrayList<Account> bankAccounts);
 }

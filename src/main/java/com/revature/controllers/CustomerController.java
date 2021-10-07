@@ -20,13 +20,12 @@ public class CustomerController extends MenuController {
 
 	private static AccountService accountService = new AccountService();
 	private static boolean running = true;
-	private static ArrayList<Account> customerAccounts = new ArrayList<>();
 
 	Scanner scan = createScanner();
 
     @Override
-	public void mainMenu(String name, ArrayList<Account>bankAccounts){
-		do { // customer functionality
+	public void mainMenu(String name, ArrayList<Account>bankAccounts, ArrayList<Account>customerAccounts){
+		do { 
 			System.out.println();
 			System.out.println("Please choose an option: ");		
 			System.out.println("1: Create a bank account");
@@ -45,7 +44,7 @@ public class CustomerController extends MenuController {
 					account = buildBankAccount(account, name);
 					accountService.addToList(account, bankAccounts);
                     System.out.println("Congrats " + name + "! You opened a new bank account");
-					buildCustomerAccounts(bankAccounts, name);
+					buildCustomerAccounts(bankAccounts, name, customerAccounts);
 					break;
 				case 2:
 					deposit(customerAccounts);
@@ -78,14 +77,16 @@ public class CustomerController extends MenuController {
 		return account;
 	}
 
-	public void buildCustomerAccounts(ArrayList<Account> bankAccounts, String name) {
+	public void buildCustomerAccounts(ArrayList<Account> bankAccounts, String name, ArrayList<Account>customerAccounts) {
 
 		for (Account account : bankAccounts) {
 			String account_name = account.getName();
-			if (name == account_name) {
+			if ((name == account_name)){
 				customerAccounts.add(account);
 			}
 		}
+
+		removeDuplicates(customerAccounts);
 	}
 	
 	public void deposit(ArrayList<Account> customerAccounts){
