@@ -4,8 +4,7 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.ArrayList;
 
-import com.revature.services.AccountService;
-import com.revature.services.CustomerService;
+import com.revature.services.*;
 
 // temporarily using models in this class
 import com.revature.models.*;
@@ -13,12 +12,13 @@ import com.revature.models.*;
 public abstract class UtilityController {
 
 	private static CustomerService customerService = new CustomerService();
+	private static EmployeeService employeeService = new EmployeeService();
 	private static AccountService accountService = new AccountService();
 
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
-	public String logIn(ArrayList<Customer>customerAccounts){
+	public String customerLogin(ArrayList<Customer>profiles){
 		do {
 			String name, password, id;
 
@@ -30,11 +30,44 @@ public abstract class UtilityController {
 
 			if (!(name.isEmpty() || password.isEmpty())) {
 				Customer customer = customerService.createAccount(name,password,id);
-				customerService.addToList(customer, customerAccounts);
+				customerService.addToList(customer, profiles);
 				System.out.println();
 				System.out.println("Congrats " + name + " you have created a user account");
 				running = false;
-				return name;
+				customer.setName(name);
+				return customer.getId();
+			} else {
+				System.out.println();
+				System.out.println("Name and/or password is incomplete. Try again");
+				System.out.println();
+			}
+		} while(running);
+
+		running = true;
+		// won't ever return this empty String. 
+		// just need to have it to satisfy 
+		// compiler cause method returns a String: name
+		return "";
+	}
+
+	public String employeeLogin(ArrayList<Employee>profiles){
+		do {
+			String name, password, id;
+
+			System.out.println("Please enter your name: ");
+			name = scan.nextLine();
+			System.out.println("Please enter your password: ");
+			password = scan.nextLine();
+			id = UUID.randomUUID().toString();
+
+			if (!(name.isEmpty() || password.isEmpty())) {
+				Employee employee = employeeService.createAccount(name,password,id);
+				employeeService.addToList(employee, profiles);
+				System.out.println();
+				System.out.println("Congrats " + name + " you have created a user account");
+				running = false;
+				employee.setName(name);
+				return employee.getId();
 			} else {
 				System.out.println();
 				System.out.println("Name and/or password is incomplete. Try again");
@@ -91,13 +124,24 @@ public abstract class UtilityController {
 		}
 	}
 
-	public void viewProfiles(ArrayList<Customer> profiles){
+	public void viewCustomerProfiles(ArrayList<Customer> profiles){
 		int count = 0;
 
 		for (Customer profile : profiles) {
 			System.out.print(count + ": ");
 			System.out.print(profile);
-			System.out.println(": $" + profile.getName());
+			System.out.println(": " + profile.getName());
+			count++;
+		}
+	}
+
+	public void viewEmployeeProfiles(ArrayList<Employee> profiles){
+		int count = 0;
+
+		for (Employee profile : profiles) {
+			System.out.print(count + ": ");
+			System.out.print(profile);
+			System.out.println(": " + profile.getName());
 			count++;
 		}
 	}
@@ -142,6 +186,16 @@ public abstract class UtilityController {
 		// clear temp list
 		newList.clear();
     }
+
+	public String getUserName(ArrayList<Account> bankAccounts, String userID){
+		for (Account account : bankAccounts) {
+			if (account.getAccountID() == userID) {
+				return account.getName();
+			}
+		}
+
+		return "";
+	}
 	
 	/**
 	 * Helper method to create a Scanner object
@@ -153,5 +207,5 @@ public abstract class UtilityController {
 		return scan;
 	}
 
-	public abstract void menu(String name, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles);
+	public abstract void menu(String userID, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles);
 }

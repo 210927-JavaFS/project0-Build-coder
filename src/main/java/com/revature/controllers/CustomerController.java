@@ -25,7 +25,7 @@ public class CustomerController extends UtilityController {
 	Scanner scan = createScanner();
 
     @Override
-	public void menu(String name, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles){
+	public void menu(String userID, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles){
 		do { 
 			System.out.println();
 			System.out.println("Please choose an option: ");		
@@ -41,8 +41,9 @@ public class CustomerController extends UtilityController {
 			
 			switch (response) {
 				case 1:
+					String name = getUserName(bankAccounts, userID);
 					Account account = null;
-					account = buildBankAccount(account, name);
+					account = buildBankAccount(name, account);
 					accountService.addToList(account, bankAccounts);
                     System.out.println("Congrats " + name + "! You opened a new bank account");
 					break;
@@ -68,7 +69,7 @@ public class CustomerController extends UtilityController {
 		running = true;
 	}
 	
-	public Account buildBankAccount(Account account, String name) {
+	public Account buildBankAccount(String name, Account account) {
 
 		String accountID = UUID.randomUUID().toString();
 		int balance = 0;

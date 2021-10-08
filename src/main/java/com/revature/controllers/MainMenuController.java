@@ -4,10 +4,6 @@ import java.util.Scanner;
 // temporarily using Array's in this class
 import java.util.ArrayList;
 
-// import com.revature.controllers.ManagerController;
-// import com.revature.controllers.TellerController;
-// import com.revature.controllers.CustomerController;
-
 // temporarily using models in this class
 import com.revature.models.*;
 
@@ -18,7 +14,7 @@ public class MainMenuController {
 		// store the lists of bank accounts and customer accounts here
 		// temporarily
 		ArrayList<Customer> customerProfiles = new ArrayList<>();
-		ArrayList<Customer> employeeProfiles = new ArrayList<>();
+		ArrayList<Employee> employeeProfiles = new ArrayList<>();
 		ArrayList<Account> bankAccounts = new ArrayList<>();
 
 		boolean running = true;
@@ -37,29 +33,24 @@ public class MainMenuController {
 			System.out.println();
 			
 			int response = scan.nextInt();
-			String name;
 			
 			switch (response) {
 				case 1:
 					CustomerController customerController = new CustomerController();
-					name = customerController.logIn(customerProfiles);
-					customerController.menu(name, bankAccounts, customerProfiles);
+					String userID = customerController.customerLogin(customerProfiles);
+					customerController.menu(userID, bankAccounts, customerProfiles);
 					break;
 
 				case 2:
-					/**
-					 * Will take out CustomerControllers from this case and one below. 
-					 * Just want to make sure utility methods work in both cases
-					 */
 					TellerController tellerController = new TellerController();
-					name = tellerController.logIn(employeeProfiles);
-					tellerController.menu(name, bankAccounts, customerProfiles);
+					String tellerID = tellerController.employeeLogin(employeeProfiles);
+					tellerController.menu(tellerID, bankAccounts, customerProfiles);
 					break;
 
 				case 3:
 					ManagerController managerController = new ManagerController();
-					name = managerController.logIn(employeeProfiles);
-					managerController.menu(name, bankAccounts, customerProfiles);
+					String managerID = managerController.employeeLogin(employeeProfiles);
+					managerController.menu(managerID, bankAccounts, customerProfiles);
 					break;
 
 				default:

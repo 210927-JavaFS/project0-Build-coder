@@ -18,7 +18,7 @@ import com.revature.models.Customer;
 public class ManagerController extends UtilityController {
 
 	@Override
-	public void menu(String name, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
+	public void menu(String userID, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
 		scan = createScanner();
 		boolean running = true;
 
@@ -26,7 +26,7 @@ public class ManagerController extends UtilityController {
 			System.out.println();
 			System.out.println("Please choose an option: ");		
 			System.out.println("1: Approve/Deny an Application");
-			System.out.println("2: View Customer Account");
+			System.out.println("2: View Customer Pofiles");
 			System.out.println("3: View Bank Account");
 			System.out.println("4: Deposit");
 			System.out.println("5: Withdraw");
@@ -42,7 +42,7 @@ public class ManagerController extends UtilityController {
 					approveAccount(bankAccounts.get(0));
 					break;
 				case 2:
-					viewProfiles(profiles);
+					viewCustomerProfiles(profiles);
 					break;
 				case 3:
 					viewAccounts(bankAccounts);
