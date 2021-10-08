@@ -29,13 +29,14 @@ public abstract class UtilityController {
 			id = UUID.randomUUID().toString();
 
 			if (!(name.isEmpty() || password.isEmpty())) {
-				Customer customer = customerService.createAccount(name,password,id);
-				customerService.addToList(customer, profiles);
+				Customer profile = customerService.createAccount(name,password,id);
+				customerService.addToList(profile, profiles);
+				customerService.save(profile);
 				System.out.println();
 				System.out.println("Congrats " + name + " you have created a user account");
 				running = false;
-				customer.setName(name);
-				return customer.getId();
+				profile.setName(name);
+				return profile.getId();
 			} else {
 				System.out.println();
 				System.out.println("Name and/or password is incomplete. Try again");
@@ -61,13 +62,14 @@ public abstract class UtilityController {
 			id = UUID.randomUUID().toString();
 
 			if (!(name.isEmpty() || password.isEmpty())) {
-				Employee employee = employeeService.createAccount(name,password,id);
-				employeeService.addToList(employee, profiles);
+				Employee profile = employeeService.createAccount(name,password,id);
+				employeeService.addToList(profile, profiles);
+				employeeService.save(profile);
 				System.out.println();
 				System.out.println("Congrats " + name + " you have created a user account");
 				running = false;
-				employee.setName(name);
-				return employee.getId();
+				profile.setName(name);
+				return profile.getId();
 			} else {
 				System.out.println();
 				System.out.println("Name and/or password is incomplete. Try again");

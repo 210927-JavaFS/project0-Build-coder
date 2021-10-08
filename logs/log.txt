@@ -1,0 +1,37 @@
+08:03:15.089 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access players file: The network path was not found
+08:03:15.092 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The network path was not found)
+08:05:05.733 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:05:05.736 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The system cannot find the path specified)
+08:05:44.580 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:05:44.583 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: home\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The system cannot find the path specified)
+08:07:08.846 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The network path was not found
+08:07:08.849 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \\home\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The network path was not found)
+08:09:38.507 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The network path was not found
+08:09:38.509 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \\home\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The network path was not found)
+08:12:18.700 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The network path was not found
+08:12:18.703 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \\home\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The network path was not found)
+08:16:32.578 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:16:32.582 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The system cannot find the path specified)
+08:18:36.616 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:18:36.619 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The system cannot find the path specified)
+08:18:40.183 [] [main] ERROR com.revature.daos.AccountDAO - Something went wrong trying to access players file: The network path was not found
+08:18:40.185 [] [main] ERROR com.revature.daos.AccountDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\accounts.txt (The network path was not found)
+08:19:05.482 [] [main] ERROR com.revature.daos.AccountDAO - Something went wrong trying to access players file: The network path was not found
+08:19:05.483 [] [main] ERROR com.revature.daos.AccountDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\accounts.txt (The network path was not found)
+08:19:22.922 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:19:22.925 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The system cannot find the path specified)
+08:19:53.258 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:19:53.263 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: \home\Desktop\Revature\training\project0-Build-coder\src\main\resources\customers.txt (The system cannot find the path specified)
+08:25:22.924 [] [main] INFO  com.revature.daos.CustomerDAO - Created new customer file
+08:27:09.699 [] [main] ERROR com.revature.daos.AccountDAO - Something went wrong trying to access players file: The network path was not found
+08:27:09.700 [] [main] ERROR com.revature.daos.AccountDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\accounts.txt (The network path was not found)
+08:28:00.928 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists
+08:28:26.654 [] [main] INFO  com.revature.daos.CustomerDAO - Created new customer file
+08:30:03.398 [] [main] ERROR com.revature.daos.CustomerDAO - Something went wrong trying to access customer file: The system cannot find the path specified
+08:30:03.401 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: .\src\main\java\com\revature\resources\customers.txt (The system cannot find the path specified)
+08:34:30.698 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists
+08:34:30.702 [] [main] ERROR com.revature.daos.CustomerDAO - Could not write to file: .\src\main\resources (Access is denied)
+08:36:55.793 [] [main] INFO  com.revature.daos.CustomerDAO - Created new customer file
+08:37:20.744 [] [main] ERROR com.revature.daos.AccountDAO - Something went wrong trying to access players file: The network path was not found
+08:37:20.745 [] [main] ERROR com.revature.daos.AccountDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\accounts.txt (The network path was not found)
+08:38:12.613 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists

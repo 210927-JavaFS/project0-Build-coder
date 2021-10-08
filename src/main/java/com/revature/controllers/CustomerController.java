@@ -34,7 +34,7 @@ public class CustomerController extends UtilityController {
 			System.out.println("3: Withdraw");
 			System.out.println("4: Transfer");
 			System.out.println("5: View Accounts");
-			System.out.println("Enter any key that's not 1-4 to quit");
+			System.out.println("Enter any key that's not 1-5 to quit");
 			System.out.println();
 			
 			int response = scan.nextInt();
@@ -45,6 +45,7 @@ public class CustomerController extends UtilityController {
 					Account account = null;
 					account = buildBankAccount(name, account);
 					accountService.addToList(account, bankAccounts);
+					accountService.save(account);
                     System.out.println("Congrats " + name + "! You opened a new bank account");
 					break;
 				case 2:

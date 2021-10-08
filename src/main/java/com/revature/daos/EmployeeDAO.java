@@ -7,18 +7,18 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.models.Account;
+import com.revature.models.Employee;
 
-public class AccountDAO {
+public class EmployeeDAO {
 	
-	 private static Logger log = LoggerFactory.getLogger(AccountDAO.class);
-	 private final String txtFile = "//c//Users//prodo//Desktop//Revature//training//project0-Build-coder//src//main//resources//accounts.txt";
+	 private static Logger log = LoggerFactory.getLogger(EmployeeDAO.class);
+	 private final String txtFile = "//c//Users//prodo//Desktop//Revature//training//project0-Build-coder//src//main//resources//employees.txt";
 
-	public void writeAccount(Account account) {
-		File accounts = new File(txtFile);
+	public void writeProfile(Employee profile) {
+		File profiles = new File(txtFile);
 		
 		try {
-			if(accounts.createNewFile()) {
+			if(profiles.createNewFile()) {
 				 log.info("Created new players file");
 //                System.out.println("Created new players file");
 			}else {
@@ -31,12 +31,12 @@ public class AccountDAO {
 		}
 		
 		try(FileWriter writer = new FileWriter(txtFile, true)){
-			StringBuilder builder = new StringBuilder(account.getAccountID());
-			builder.append(","+account.getName());
-			builder.append(","+account.getAccountID());
-			builder.append(","+account.getBalance()+"\n");
-			String accountString = new String(builder);
-			writer.write(accountString);
+			StringBuilder builder = new StringBuilder(profile.getId());
+			builder.append(","+profile.getName());
+			builder.append(","+profile.getId());
+			builder.append(","+profile.getPassword()+"\n");
+			String profileString = new String(builder);
+			writer.write(profileString);
 		}catch(IOException e) {
 			 log.error("Could not write to file: "+e.getMessage());
 //            System.out.println(e.getMessage());

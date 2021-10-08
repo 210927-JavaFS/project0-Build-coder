@@ -1,3 +1,0 @@
-Example of a log entry:
-
-17:49:02.039 [] [main] INFO  com.revature.daos.PlayerDAO - players file already exists
