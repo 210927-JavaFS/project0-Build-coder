@@ -1,9 +1,11 @@
 package com.revature.controllers;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.utils.controllerUtil;
 
 /**
  * Employees of the bank should be able to view the
@@ -15,11 +17,11 @@ import com.revature.models.Customer;
  * Bank admins should be able to withdraw/deposit/transfer
  * Cancel accounts 
  */
-public class ManagerController extends UtilityController {
+public class ManagerController extends controllerUtil {
 
 	@Override
 	public void menu(String userID, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
-		scan = createScanner();
+		Scanner scan = createScanner();
 		boolean running = true;
 
 		do { 

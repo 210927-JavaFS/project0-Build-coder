@@ -1,4 +1,4 @@
-package com.revature.controllers;
+package com.revature.utils;
 
 import java.util.Scanner;
 import java.util.UUID;
@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import com.revature.services.*;
 
 // temporarily using models in this class
-import com.revature.models.*;
+import com.revature.models.Customer;
+import com.revature.models.Employee;
+import com.revature.models.Account;
 
-public abstract class UtilityController {
+public abstract class controllerUtil {
 
 	private static CustomerService customerService = new CustomerService();
 	private static EmployeeService employeeService = new EmployeeService();
@@ -29,7 +31,8 @@ public abstract class UtilityController {
 			id = UUID.randomUUID().toString();
 
 			if (!(name.isEmpty() || password.isEmpty())) {
-				Customer profile = customerService.createAccount(name,password,id);
+				Account emptyAccount = null;
+				Customer profile = customerService.createAccount(name,password,id,emptyAccount);
 				customerService.addToList(profile, profiles);
 				customerService.save(profile);
 				System.out.println();
@@ -148,20 +151,22 @@ public abstract class UtilityController {
 		}
 	}
 
-	public boolean approveAccount(Account x){
-		boolean approve;
-		scan = createScanner();
-		System.out.println("Do you approve the creation of " + x + " account?");
-		System.out.println("Type 'yes' or 'no");
-		String response = scan.nextLine();
-		
-		if (response == "yes") {
-			approve = true;
-		} else{
-			approve = false;
-		}
+	public void activateAccount(Account x){
+		boolean active = x.isActive();
 
-		return approve;
+		if (!active) {
+			scan = createScanner();
+			System.out.println("Do you want to activate account: " + x + "?");
+			System.out.println("Type 'yes' or 'no");
+			String response = scan.nextLine();
+			
+			if (response == "yes") {
+				x.setActive(true);
+				System.out.println("Account: " + x + " is now active");
+			} else{
+				System.out.println("Account: " + x + " remains inactive");
+			}
+		}
 	}
 
 	public void removeDuplicates(ArrayList<Account> customerAccounts){

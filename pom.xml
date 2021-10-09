@@ -12,12 +12,33 @@
 	</properties>
   
   <dependencies>
+
+    <!-- logging dependency -->
     <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.2.6</version>
     </dependency>
+
+    <!-- junit dependency -->
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- postgressql dependency -->
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.2.24</version>
+    </dependency>
+
+
   </dependencies>
 
 </project>

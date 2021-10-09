@@ -1,31 +1,28 @@
 package com.revature.models;
 
-import java.util.HashMap;
-
-
 public class Account {
     private String name;
 	private String accountID;
 	private int balance;
-	private HashMap<String, String> map = new HashMap<String, String>();
+	private boolean active;
 
-	public Account(String name, String accountID, int balance) {
+	public Account(String name, String accountID, int balance, boolean active) {
 		this.name = name;
 		this.accountID = accountID;
 		this.balance = balance;
-		this.map.put(name, accountID);
+		this.active = active;
 	}
 	
 	Account(){
 		super();
 	}
 
-	public HashMap<String, String> getMap(String string) {
-		return map;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setMap(HashMap<String, String> map) {
-		this.map = map;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public String getName() {

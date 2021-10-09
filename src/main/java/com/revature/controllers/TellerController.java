@@ -1,9 +1,11 @@
 package com.revature.controllers;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.utils.controllerUtil;
 
 /**
  * Employees of the bank should be able to view the
@@ -12,11 +14,11 @@ import com.revature.models.Customer;
  * Employees of the bank should be able to approve/deny 
  * open applications for accounts. 
  */
-public class TellerController extends UtilityController{
+public class TellerController extends controllerUtil{
 
 	@Override
 	public void menu(String userID, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
-		scan = createScanner();
+		Scanner scan = createScanner();
 		boolean running = true;
 
 		do { 

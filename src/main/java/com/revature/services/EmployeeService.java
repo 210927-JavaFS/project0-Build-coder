@@ -2,13 +2,13 @@ package com.revature.services;
 
 import java.util.ArrayList;
 
-import com.revature.daos.EmployeeDAO;
+import com.revature.daos.EmployeeDAOImpl;
 import com.revature.models.Employee;
 
 public class EmployeeService {
 
 	private ArrayList<Employee> allAccounts = new ArrayList<>();
-	private static EmployeeDAO employeeDAO = new EmployeeDAO();
+	private static EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
 
 	public Employee createAccount(String name, String password, String id) {
 		return new Employee(name, password, id);

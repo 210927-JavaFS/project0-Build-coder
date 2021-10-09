@@ -1,15 +1,14 @@
 package com.revature.controllers;
 
+// temporarily using Array's in this class
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
-
 import com.revature.services.AccountService;
-
-// temporarily using Array's in this class
-import java.util.ArrayList;
+import com.revature.utils.controllerUtil;
 	
 /**
  * Customers should be able to register with a user name and password, 
@@ -18,7 +17,7 @@ import java.util.ArrayList;
  * Once the account has been approved, customers should be able to 
  * withdraw/deposit/transfer funds between their accounts
  */
-public class CustomerController extends UtilityController {
+public class CustomerController extends controllerUtil {
 
 	private static AccountService accountService = new AccountService();
 	private static boolean running = true;
@@ -74,7 +73,8 @@ public class CustomerController extends UtilityController {
 
 		String accountID = UUID.randomUUID().toString();
 		int balance = 0;
-		account=accountService.createAccount(name,accountID,balance);
+		boolean active = false;
+		account=accountService.createAccount(name,accountID,balance, active);
 
 		return account;
 	}

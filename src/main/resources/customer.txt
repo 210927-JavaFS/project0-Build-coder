@@ -1,2 +1,0 @@
-26798ae5-1adc-44a4-85b1-c1b51c0b282c,jim,26798ae5-1adc-44a4-85b1-c1b51c0b282c,pass
-6e7cde48-bc38-48eb-aa22-5c25da22d652,susie,6e7cde48-bc38-48eb-aa22-5c25da22d652,pass

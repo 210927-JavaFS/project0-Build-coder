@@ -35,3 +35,9 @@
 08:37:20.744 [] [main] ERROR com.revature.daos.AccountDAO - Something went wrong trying to access players file: The network path was not found
 08:37:20.745 [] [main] ERROR com.revature.daos.AccountDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\accounts.txt (The network path was not found)
 08:38:12.613 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists
+15:17:40.617 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists
+15:17:44.506 [] [main] ERROR com.revature.daos.AccountDAO - Something went wrong trying to access players file: The network path was not found
+15:17:44.507 [] [main] ERROR com.revature.daos.AccountDAO - Could not write to file: \\c\Users\prodo\Desktop\Revature\training\project0-Build-coder\src\main\resources\accounts.txt (The network path was not found)
+15:18:57.443 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists
+15:18:58.551 [] [main] INFO  com.revature.daos.AccountDAO - players file already exists
+15:18:59.326 [] [main] INFO  com.revature.daos.AccountDAO - players file already exists

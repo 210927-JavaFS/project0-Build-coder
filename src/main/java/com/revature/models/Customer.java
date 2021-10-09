@@ -4,11 +4,13 @@ public class Customer {
     private String name;
     private String password;
     private String id;
+    private Account account;
 
-    public Customer(String name, String password, String id){
+    public Customer(String name, String password, String id, Account account){
         this.name = name;
         this.password = password;
         this.id = id;
+        this.account = account;
     }
 
     public Customer(){

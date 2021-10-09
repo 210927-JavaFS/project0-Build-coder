@@ -2,16 +2,16 @@ package com.revature.services;
 
 import java.util.ArrayList;
 
-import com.revature.daos.AccountDAO;
+import com.revature.daos.AccountDAOImpl;
 import com.revature.models.Account;
 
 public class AccountService {
 
 	private ArrayList<Account> allAccounts = new ArrayList<>();
-	private static AccountDAO accountDAO = new AccountDAO();
+	private static AccountDAOImpl accountDAO = new AccountDAOImpl();
 
-	public Account createAccount(String name, String accountID, int balance) {
-		return new Account(name, accountID, balance);
+	public Account createAccount(String name, String accountID, int balance, boolean active) {
+		return new Account(name, accountID, balance, active);
 	}
 
 	public void add(Account account, int amount) {
@@ -26,6 +26,11 @@ public class AccountService {
 		// allAccounts.add(x);
 		bankAccounts.add(x);
     }
+
+	public void updateAccount(Account x){
+		// if account == null, init account
+		
+	}
 
 	public void save(Account account) {
 		accountDAO.writeAccount(account);
