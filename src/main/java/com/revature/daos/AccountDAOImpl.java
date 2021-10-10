@@ -87,12 +87,6 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public Account findAccount(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean removeAccount(Account x) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 

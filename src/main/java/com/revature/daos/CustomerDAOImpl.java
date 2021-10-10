@@ -52,20 +52,29 @@ public class CustomerDAOImpl implements CustomerDAO{
 		return null;
 	}
 
-
-	@Override
-	public Customer findProfile(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	@Override
 	public boolean addProfile(Customer x) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean removeProfile(Customer x) {
-		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionUtil.getConnection()){
+
+			String sql = "DELETE FROM customers WHERE customer_id = ?";
+				
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setObject(1, x.getId());
+		
+			statement.execute();
+			
+			return true;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 	@Override
@@ -97,10 +106,5 @@ public class CustomerDAOImpl implements CustomerDAO{
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	@Override
-	public void setAccount(Customer x){
-
 	}
 }

@@ -7,7 +7,6 @@ import com.revature.models.Account;
 public interface AccountDAO {
 
 	public List<Account> findAll(); 
-	public Account findAccount(String id);
 	
 	// boolean to return true/false if it pass/failed
 	public boolean addAccount(Account x);

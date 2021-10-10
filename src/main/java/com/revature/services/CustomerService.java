@@ -28,4 +28,8 @@ public class CustomerService {
 	public List<Customer> getAllProfiles(){
 		return customerDAO.findAll();
 	}
+
+	public void remove(Customer x){
+		customerDAO.removeProfile(x);
+	}
 }

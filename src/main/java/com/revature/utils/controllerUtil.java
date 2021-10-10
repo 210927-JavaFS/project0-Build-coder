@@ -209,7 +209,7 @@ public abstract class ControllerUtil {
 		System.out.println("Please enter the Customer's ID: ");
 		String customerID = scan.nextLine();
 		Customer customer = findByCustomerID(customerID);
-		accountService.remove(customer);
+		customerService.remove(customer);
 	}
 
 	public abstract void menu();
