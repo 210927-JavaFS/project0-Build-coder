@@ -54,26 +54,54 @@ public abstract class ControllerUtil {
 	}
 
 	public void logIn(){
-
-
 	}
 
-	public void deposit(ArrayList<Account> customerAccounts){
+	public Account findByAccountID(String accountID){
+		List<Account> list = accountService.getAllAccounts();
+		for(Account x:list) {
+			if (accountID.equals(x.getAccountID())) {
+				return x;
+			}
+		}
+
+		System.out.println("Could not find Account");
+		return null;
+	}
+
+	public Customer findByCustomerID(String customerID){
+		List<Customer> list = customerService.getAllProfiles();
+		for(Customer x:list) {
+			if (customerID == x.getId()) {
+				return x;
+			}
+		}
+
+		System.out.println("Could not find Customer");
+		return null;
+	}
+
+	public void deposit(){
+		Scanner scan = createScanner();
 		System.out.println("Which account would you like to deposit money in?");
-		viewAccounts(customerAccounts);
-		int i = scan.nextInt();
+		viewAccounts();
+		System.out.println("Please enter the Account's ID: ");
+		String accountID = scan.nextLine();
+		Account account = findByAccountID(accountID);
 		System.out.println("How much would you like to deposit?");
-		int amount = scan.nextInt();
-		accountService.add(customerAccounts.get(i), amount);
+		float amount = scan.nextFloat();
+		accountService.add(account, amount);
 	}
 
-	public void withdraw(ArrayList<Account> customerAccounts){
-		System.out.println("Which account do you want to withdraw from?");
-		viewAccounts(customerAccounts);
-		int i = scan.nextInt();
+	public void withdraw(){
+		Scanner scan = createScanner();
+		System.out.println("Which account would you like to withdraw money from?");
+		viewAccounts();
+		System.out.println("Please enter the Account's ID: ");
+		String accountID = scan.nextLine();
+		Account account = findByAccountID(accountID);
 		System.out.println("How much would you like to withdraw?");
-		int amount = scan.nextInt();
-		accountService.subtract(customerAccounts.get(i), amount);
+		float amount = scan.nextFloat();
+		accountService.subtract(account, amount);
 	}
 
 	public void transfer(ArrayList<Account> customerAccounts){
@@ -94,6 +122,14 @@ public abstract class ControllerUtil {
 		System.out.println("Here are all the Customer Profiles:");
 		List<Customer> list = customerService.getAllProfiles();
 		for(Customer x:list) {
+			System.out.println(x);
+		}
+	}
+
+	public void viewAccounts(){
+		System.out.println("Here are all the Accounts:");
+		List<Account> list = accountService.getAllAccounts();
+		for(Account x:list) {
 			System.out.println(x);
 		}
 	}
@@ -142,16 +178,6 @@ public abstract class ControllerUtil {
 		// clear temp list
 		newList.clear();
     }
-
-	public String getUserName(ArrayList<Account> bankAccounts, String userID){
-		for (Account account : bankAccounts) {
-			if (account.getAccountID() == userID) {
-				return account.getName();
-			}
-		}
-
-		return "";
-	}
 	
 	/**
 	 * Helper method to create a Scanner object

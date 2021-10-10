@@ -16,7 +16,7 @@ public interface CustomerDAO {
 	// boolean to return true/false if it pass/failed
 	public boolean removeProfile(Customer x);
 
-	public Customer findByName(String customer_id);
+	public Customer findByID(String customer_id);
 
 	public void setAccount(Customer x);
 }

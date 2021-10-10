@@ -58,9 +58,10 @@ public class CustomerController extends ControllerUtil {
 				// 	break;
 				case 5:
 					// class example
-					viewProfiles();
+					// viewProfiles();
+					viewAccounts();
 					break;
-		
+	
 				default:
 					System.out.println("Exited customer interface");
 					running = false;

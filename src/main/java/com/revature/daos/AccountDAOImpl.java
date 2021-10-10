@@ -3,7 +3,7 @@ package com.revature.daos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.models.Account;
+import com.revature.models.*;
 import com.revature.utils.ConnectionUtil;
 
 import java.sql.Connection;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class AccountDAOImpl implements AccountDAO{
 	
 	private static Logger log = LoggerFactory.getLogger(AccountDAOImpl.class);
-	private final String txtFile = "./src/main/resources/customer.txt";
+	private CustomerDAO customerDAO = new CustomerDAOImpl();
 
 	@Override
 	public List<Account> findAll() {
@@ -39,9 +39,17 @@ public class AccountDAOImpl implements AccountDAO{
 				Account account = new Account(
 						result.getString("account_id"), 
 						result.getInt("account_balance"),
-						result.getBoolean("account_active")
+						result.getBoolean("account_active"),
+						null
 						);
-				
+
+				String customer_id = result.getString("customer_id");
+
+				if(customer_id!=null) {
+					Customer customer = customerDAO.findByID(customer_id);
+					account.setCustomer(customer);
+				}
+			
 				list.add(account);
 			}
 			
@@ -92,32 +100,32 @@ public class AccountDAOImpl implements AccountDAO{
 
 	@Override
 	public Account findByID(String account_id) {
-        try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
-			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
+ 
+		return null;
+	}
+
+	@Override
+	public boolean updateBalance(Account x){
+
+		try(Connection conn = ConnectionUtil.getConnection()){
+
+			String sql = "UPDATE accounts SET account_balance = " + "?"
+			+ " WHERE account_id = " + "?";
+	
+			int count = 0;
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setString(1, account_id);
+			statement.setFloat(++count, x.getBalance());
+			statement.setString(++count, x.getAccountID());
 			
-			ResultSet result = statement.executeQuery();
+			statement.execute();
 			
-			Account account = new Account();
-			
-			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
-			//with a while loop to iterate through all the data. 
-			
-			if(result.next()) {
-				
-				account.setAccountID(result.getString("account_id"));
-				account.setBalance(result.getFloat("account_balance"));
-				account.setActive(result.getBoolean("account_active"));
-			}
-			
-			return account;
-			
-		}catch (SQLException e) {
+			return true;
+
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 }

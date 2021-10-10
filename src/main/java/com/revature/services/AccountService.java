@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.daos.AccountDAOImpl;
 import com.revature.models.Account;
@@ -14,12 +15,14 @@ public class AccountService {
 		return new Account(name, accountID, balance, active);
 	}
 
-	public void add(Account account, int amount) {
-		account.setBalance(account.getBalance() + amount);
+	public void add(Account x, float amount) {
+		x.setBalance(x.getBalance() + amount);
+		accountDAO.updateBalance(x);
 	}
 
-	public void subtract(Account account, int amount) {
-		account.setBalance(account.getBalance() - amount);
+	public void subtract(Account x, float amount) {
+		x.setBalance(x.getBalance() - amount);
+		accountDAO.updateBalance(x);
 	}
 
     public void addToList(Account x, ArrayList<Account>bankAccounts){
@@ -30,6 +33,11 @@ public class AccountService {
 	public void updateAccount(Account x){
 		// if account == null, init account
 		
+	}
+
+	// class example
+	public List<Account> getAllAccounts(){
+		return accountDAO.findAll();
 	}
 
 	public void save(Account account) {

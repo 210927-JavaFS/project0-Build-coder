@@ -1,25 +1,23 @@
 package com.revature.daos;
 
-import java.sql.Connection;
-
 import java.util.List;
 import java.util.ArrayList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.utils.ConnectionUtil;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	
 	private static Logger log = LoggerFactory.getLogger(CustomerDAOImpl.class);
-	private AccountDAO accountDAO = new AccountDAOImpl();
 
 	// class example
 	@Override
@@ -40,16 +38,9 @@ public class CustomerDAOImpl implements CustomerDAO{
 				Customer customer = new Customer(
 						result.getString("customer_id"), 
 						result.getString("customer_name"),
-						result.getString("customer_password"),
-						null // account object
+						result.getString("customer_password")
 						);
-				String account_id = result.getString("account_id");
-
-				if(account_id!=null) {
-					Account account = accountDAO.findByID(account_id);
-					customer.setAccount(account);
-				}
-				
+			
 				list.add(customer);
 			}
 			
@@ -78,8 +69,33 @@ public class CustomerDAOImpl implements CustomerDAO{
 		return false;
 	}
 	@Override
-	public Customer findByName(String customer_id) {
-		// TODO Auto-generated method stub
+	public Customer findByID(String customer_id) {
+		try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
+			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, customer_id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			Customer customer = new Customer();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
+			//with a while loop to iterate through all the data. 
+			
+			if(result.next()) {
+				
+				customer.setId(result.getString("customer_id"));
+				customer.setName(result.getString("customer_name"));
+				customer.setPassword(result.getString("customer_password"));
+			}
+			
+			return customer;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

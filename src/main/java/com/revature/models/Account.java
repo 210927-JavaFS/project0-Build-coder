@@ -6,16 +6,26 @@ public class Account {
 	private String accountID;
 	private float balance;
 	private boolean active;
+	private Customer customer;
 
-	public Account(String accountID, float balance, boolean active) {
+	public Account(String accountID, float balance, boolean active, Customer customer) {
 		super();
 		this.accountID = accountID;
 		this.balance = balance;
 		this.active = active;
+		this.customer = customer;
 	}
 
 	public Account(){
 		super();
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public boolean isActive() {

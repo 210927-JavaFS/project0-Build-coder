@@ -39,25 +39,29 @@ public class ManagerController extends ControllerUtil {
 			int response = scan.nextInt();
 			
 			switch (response) {
-				case 1:
-					// first account in the list hard coded is for now
-					approveAccount(bankAccounts.get(0));
-					break;
+				// case 1:
+				// 	// first account in the list hard coded is for now
+				// 	approveAccount(bankAccounts.get(0));
+				// 	break;
 				case 2:
-					viewCustomerProfiles(profiles);
+					viewProfiles();
 					break;
 				case 3:
-					viewAccounts(bankAccounts);
+					viewAccounts();
 					break;
 				case 4:
-					deposit(bankAccounts);
+					deposit();
 					break;
 				case 5:
-					withdraw(bankAccounts);
+					withdraw();
 					break;
-				case 6:
-					transfer(bankAccounts);
-					break;
+				// case 6:
+				// 	transfer(bankAccounts);
+				// 	break;
+				// case 7:
+				// 	// remove account
+				// 	cancel();
+
 				default:
 					System.out.println("Exited manager interface");
 					running = false;

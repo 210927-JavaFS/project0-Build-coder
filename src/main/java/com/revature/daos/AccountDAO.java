@@ -15,4 +15,6 @@ public interface AccountDAO {
 	// boolean to return true/false if it pass/failed
 	public boolean removeAccount(Account x);
 	public Account findByID(String account_id);
+
+	public boolean updateBalance(Account x);
 }

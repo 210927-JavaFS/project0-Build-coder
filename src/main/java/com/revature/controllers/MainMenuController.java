@@ -24,11 +24,11 @@ public class MainMenuController {
 			int response = scan.nextInt();
 			
 			switch (response) {
-				case 1:
-					CustomerController customerController = new CustomerController();
+				// case 1:
+				// 	CustomerController customerController = new CustomerController();
 					// customerController.customerLogin();
-					customerController.menu();
-					break;
+					// customerController.menu();
+					// break;
 
 				// case 2:
 				// 	TellerController tellerController = new TellerController();
@@ -36,11 +36,11 @@ public class MainMenuController {
 				// 	tellerController.menu(tellerID);
 				// 	break;
 
-				// case 3:
-				// 	ManagerController managerController = new ManagerController();
-				// 	String managerID = managerController.employeeLogin();
-				// 	managerController.menu(managerID);
-				// 	break;
+				case 3:
+					ManagerController managerController = new ManagerController();
+					managerController.menu();
+					break;
+
 
 				default:
 					System.out.println("Thank you, have a good day!");
