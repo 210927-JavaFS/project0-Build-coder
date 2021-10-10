@@ -6,7 +6,7 @@ public class Customer {
     private String password;
     private Account account;
 
-    public Customer(String name, String password, String id, Account account){
+    public Customer(String id, String name, String password, Account account){
         super();
         this.name = name;
         this.password = password;
@@ -21,6 +21,14 @@ public class Customer {
     public String getName() {
         return name;
     }
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -84,7 +92,5 @@ public class Customer {
     public String toString() {
         return "Customer [account=" + account + ", id=" + id + ", name=" + name + ", password=" + password + "]";
     }
-
-    public void setAccount(Account account2) {
-    }
 }
+
