@@ -33,7 +33,8 @@ public class ManagerController extends ControllerUtil {
 			System.out.println("4: Deposit");
 			System.out.println("5: Withdraw");
 			System.out.println("6: Transfer");
-			System.out.println("Enter any key that's not 1-3 to quit");
+			System.out.println("7: Cancel Bank Account");
+			System.out.println("Enter any key that's not 1-7 to quit");
 			System.out.println();
 			
 			int response = scan.nextInt();
@@ -55,12 +56,20 @@ public class ManagerController extends ControllerUtil {
 				case 5:
 					withdraw();
 					break;
-				// case 6:
-				// 	transfer(bankAccounts);
-				// 	break;
-				// case 7:
-				// 	// remove account
-				// 	cancel();
+				case 6:
+					transfer();
+					break;
+				case 7:
+					// remove bank account
+					cancelAccount();
+					break;
+				// case 8:
+					/**
+					 * Not sure if I need this functionality
+					 * Might have to set the account_id to null
+					 */
+					// cancelProfile();
+					// break;
 
 				default:
 					System.out.println("Exited manager interface");

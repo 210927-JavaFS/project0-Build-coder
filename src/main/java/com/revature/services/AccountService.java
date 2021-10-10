@@ -40,6 +40,10 @@ public class AccountService {
 		return accountDAO.findAll();
 	}
 
+	public void remove(Account x){
+		accountDAO.removeAccount(x);
+	}
+
 	public void save(Account account) {
 		accountDAO.writeAccount(account);
 	}

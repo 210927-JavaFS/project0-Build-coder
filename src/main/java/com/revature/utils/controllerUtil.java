@@ -71,7 +71,7 @@ public abstract class ControllerUtil {
 	public Customer findByCustomerID(String customerID){
 		List<Customer> list = customerService.getAllProfiles();
 		for(Customer x:list) {
-			if (customerID == x.getId()) {
+			if (customerID.equals(x.getId())) {
 				return x;
 			}
 		}
@@ -104,17 +104,20 @@ public abstract class ControllerUtil {
 		accountService.subtract(account, amount);
 	}
 
-	public void transfer(ArrayList<Account> customerAccounts){
+	public void transfer(){
+		Scanner scan = createScanner();
 		System.out.println("Which account do you want to transfer money from?");
-		viewAccounts(customerAccounts);
-		int i = scan.nextInt();
+		viewAccounts();
+		System.out.println("Please enter the Account's ID: ");
+		String fromAccountID = scan.nextLine();
+		Account fromAccount = findByAccountID(fromAccountID);
 		System.out.println("Which account would you like to transfer the money to?");
-		viewAccounts(customerAccounts);
-		int j = scan.nextInt();
+		String toAccountID = scan.nextLine();
+		Account toAccount = findByAccountID(toAccountID);
 		System.out.println("How much would you like to transfer?");
-		int amount = scan.nextInt();
-		accountService.subtract(customerAccounts.get(i), amount);
-		accountService.add(customerAccounts.get(j), amount);
+		float amount = scan.nextFloat();
+		accountService.subtract(fromAccount, amount);
+		accountService.add(toAccount, amount);
 	}
 
 	// class example
@@ -187,6 +190,26 @@ public abstract class ControllerUtil {
 		Scanner scan = new Scanner(System.in);
 		
 		return scan;
+	}
+
+	public void cancelAccount(){
+		Scanner scan = createScanner();
+		System.out.println("Which account would you like to cancel?");
+		viewAccounts();
+		System.out.println("Please enter the Account's ID: ");
+		String accountID = scan.nextLine();
+		Account account = findByAccountID(accountID);
+		accountService.remove(account);
+	}
+
+	public void cancelProfile(){
+		Scanner scan = createScanner();
+		System.out.println("Which account would you like to cancel?");
+		viewProfiles();
+		System.out.println("Please enter the Customer's ID: ");
+		String customerID = scan.nextLine();
+		Customer customer = findByCustomerID(customerID);
+		accountService.remove(customer);
 	}
 
 	public abstract void menu();

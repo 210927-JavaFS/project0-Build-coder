@@ -94,7 +94,21 @@ public class AccountDAOImpl implements AccountDAO{
 
 	@Override
 	public boolean removeAccount(Account x) {
-		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionUtil.getConnection()){
+
+			String sql = "DELETE FROM accounts WHERE account_id = ?";
+				
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setObject(1, x.getAccountID());
+		
+			statement.execute();
+			
+			return true;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -109,8 +123,8 @@ public class AccountDAOImpl implements AccountDAO{
 
 		try(Connection conn = ConnectionUtil.getConnection()){
 
-			String sql = "UPDATE accounts SET account_balance = " + "?"
-			+ " WHERE account_id = " + "?";
+			String sql = "UPDATE accounts SET account_balance = ?"
+			+ " WHERE account_id = ?";
 	
 			int count = 0;
 			
