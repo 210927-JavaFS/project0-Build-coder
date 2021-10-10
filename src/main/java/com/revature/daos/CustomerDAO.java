@@ -4,7 +4,19 @@ import java.util.List;
 import com.revature.models.Customer;
 
 public interface CustomerDAO {
-    public List<Customer> findAll(); 
-	public Customer findAccount(int id);
-	public boolean addAccount(Customer account);
+
+	// class example
+	public List<Customer> findAll(); 
+
+	public Customer findProfile(String id);
+	
+	// boolean to return true/false if it pass/failed
+	public boolean addProfile(Customer x);
+
+	// boolean to return true/false if it pass/failed
+	public boolean removeProfile(Customer x);
+
+	public Customer findByName(String customer_id);
+
+	public void setAccount(Customer x);
 }

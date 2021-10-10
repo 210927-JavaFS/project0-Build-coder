@@ -41,3 +41,7 @@
 15:18:57.443 [] [main] INFO  com.revature.daos.CustomerDAO - customer file already exists
 15:18:58.551 [] [main] INFO  com.revature.daos.AccountDAO - players file already exists
 15:18:59.326 [] [main] INFO  com.revature.daos.AccountDAO - players file already exists
+13:20:13.948 [] [main] INFO  com.revature.daos.CustomerDAOImpl - customer file already exists
+13:20:18.440 [] [main] INFO  com.revature.daos.AccountDAOImpl - players file already exists
+13:20:20.429 [] [main] INFO  com.revature.daos.AccountDAOImpl - players file already exists
+13:20:59.062 [] [main] INFO  com.revature.daos.EmployeeDAOImpl - players file already exists

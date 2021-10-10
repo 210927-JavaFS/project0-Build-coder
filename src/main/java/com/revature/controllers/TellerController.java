@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
-import com.revature.utils.controllerUtil;
+import com.revature.utils.ControllerUtil;
 
 /**
  * Employees of the bank should be able to view the
@@ -14,10 +14,10 @@ import com.revature.utils.controllerUtil;
  * Employees of the bank should be able to approve/deny 
  * open applications for accounts. 
  */
-public class TellerController extends controllerUtil{
+public class TellerController extends ControllerUtil{
 
 	@Override
-	public void menu(String userID, ArrayList<Account> bankAccounts, ArrayList<Customer> profiles) {
+	public void menu() {
 		Scanner scan = createScanner();
 		boolean running = true;
 
@@ -35,7 +35,7 @@ public class TellerController extends controllerUtil{
 			switch (response) {
 				case 1:
 					// first account in the list hard coded is for now
-					approveAccount(bankAccounts.get(0));
+					activateAccount(x);
 					break;
 				case 2:
 					viewCustomerProfiles(profiles);

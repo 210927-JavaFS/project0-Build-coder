@@ -3,24 +3,23 @@ package com.revature.utils;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.services.*;
 
 // temporarily using models in this class
 import com.revature.models.Customer;
-import com.revature.models.Employee;
 import com.revature.models.Account;
 
-public abstract class controllerUtil {
+public abstract class ControllerUtil {
 
 	private static CustomerService customerService = new CustomerService();
-	private static EmployeeService employeeService = new EmployeeService();
 	private static AccountService accountService = new AccountService();
 
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
-	public String customerLogin(ArrayList<Customer>profiles){
+	public String createProfile(){
 		do {
 			String name, password, id;
 
@@ -54,37 +53,9 @@ public abstract class controllerUtil {
 		return "";
 	}
 
-	public String employeeLogin(ArrayList<Employee>profiles){
-		do {
-			String name, password, id;
+	public void logIn(){
 
-			System.out.println("Please enter your name: ");
-			name = scan.nextLine();
-			System.out.println("Please enter your password: ");
-			password = scan.nextLine();
-			id = UUID.randomUUID().toString();
 
-			if (!(name.isEmpty() || password.isEmpty())) {
-				Employee profile = employeeService.createAccount(name,password,id);
-				employeeService.addToList(profile, profiles);
-				employeeService.save(profile);
-				System.out.println();
-				System.out.println("Congrats " + name + " you have created a user account");
-				running = false;
-				profile.setName(name);
-				return profile.getId();
-			} else {
-				System.out.println();
-				System.out.println("Name and/or password is incomplete. Try again");
-				System.out.println();
-			}
-		} while(running);
-
-		running = true;
-		// won't ever return this empty String. 
-		// just need to have it to satisfy 
-		// compiler cause method returns a String: name
-		return "";
 	}
 
 	public void deposit(ArrayList<Account> customerAccounts){
@@ -118,36 +89,12 @@ public abstract class controllerUtil {
 		accountService.add(customerAccounts.get(j), amount);
 	}
 
-	public void viewAccounts(ArrayList<Account> bankAccounts){
-		int count = 0;
-
-		for (Account account : bankAccounts) {
-			System.out.print(count + ": ");
-			System.out.print(account);
-			System.out.println(": $" + account.getBalance());
-			count++;
-		}
-	}
-
-	public void viewCustomerProfiles(ArrayList<Customer> profiles){
-		int count = 0;
-
-		for (Customer profile : profiles) {
-			System.out.print(count + ": ");
-			System.out.print(profile);
-			System.out.println(": " + profile.getName());
-			count++;
-		}
-	}
-
-	public void viewEmployeeProfiles(ArrayList<Employee> profiles){
-		int count = 0;
-
-		for (Employee profile : profiles) {
-			System.out.print(count + ": ");
-			System.out.print(profile);
-			System.out.println(": " + profile.getName());
-			count++;
+	// class example
+	public void viewProfiles(){
+		System.out.println("Here are all the Customer Profiles:");
+		List<Customer> list = customerService.getAllProfiles();
+		for(Customer x:list) {
+			System.out.println(x);
 		}
 	}
 
@@ -166,6 +113,8 @@ public abstract class controllerUtil {
 			} else{
 				System.out.println("Account: " + x + " remains inactive");
 			}
+		} else{
+			System.out.println("Account is active");
 		}
 	}
 
@@ -214,5 +163,5 @@ public abstract class controllerUtil {
 		return scan;
 	}
 
-	public abstract void menu(String userID, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles);
+	public abstract void menu();
 }

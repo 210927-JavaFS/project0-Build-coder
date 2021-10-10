@@ -4,6 +4,8 @@ import com.revature.models.Account;
 import com.revature.services.AccountService;
 
 import org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,5 +65,16 @@ public class AccountServiceTests {
 		AccountDAOImpl accountDAO = new AccountDAOImpl();
         accountDAO.writeAccount(account);
 	}
+
+    @AfterEach
+    public void clearResults(){
+
+    }
+
+    @AfterAll
+    public static void clearAccountServ(){
+        accountServ = null;
+        log.info("in clearAccountServ");
+    }
 
 }

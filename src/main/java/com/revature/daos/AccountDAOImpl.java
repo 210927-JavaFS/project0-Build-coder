@@ -1,83 +1,123 @@
 package com.revature.daos;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.models.Account;
+import com.revature.utils.ConnectionUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class AccountDAOImpl implements AccountDAO{
 	
-	 private static Logger log = LoggerFactory.getLogger(AccountDAOImpl.class);
-	 private final String txtFile = "./src/main/resources/customer.txt";
-
-	public void writeAccount(Account account) {
-		File accounts = new File(txtFile);
-		
-		try {
-			if(accounts.createNewFile()) {
-				 log.info("Created new players file");
-//                System.out.println("Created new players file");
-			}else {
-				 log.info("players file already exists");
-//                System.out.println("players file already exists");
-			}
-		}catch(IOException e) {
-			 log.error("Something went wrong trying to access players file: "+e.getMessage());
-//            System.out.println(e.getMessage());
-		}
-		
-		try(FileWriter writer = new FileWriter(txtFile, true)){
-			StringBuilder builder = new StringBuilder(account.getAccountID());
-			builder.append(","+account.getName());
-			builder.append(","+account.getAccountID());
-			builder.append(","+account.getBalance()+"\n");
-			String accountString = new String(builder);
-			writer.write(accountString);
-		}catch(IOException e) {
-			 log.error("Could not write to file: "+e.getMessage());
-//            System.out.println(e.getMessage());
-		}	
-	}
+	private static Logger log = LoggerFactory.getLogger(AccountDAOImpl.class);
+	private final String txtFile = "./src/main/resources/customer.txt";
 
 	@Override
 	public List<Account> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Account findAccount(int id) {
-		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
+			String sql = "SELECT * FROM accounts;";
+			
+			Statement statement = conn.createStatement();
+			
+			ResultSet result = statement.executeQuery(sql);
+			
+			List<Account> list = new ArrayList<>();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
+			//with a while loop to iterate through all the data. 
+			
+			while(result.next()) {
+				Account account = new Account(
+						result.getString("account_id"), 
+						result.getInt("account_balance"),
+						result.getBoolean("account_active")
+						);
+				
+				list.add(account);
+			}
+			
+			return list;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public boolean addAccount(Account account) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			
+			String sql = "INSERT INTO accounts (account_id, account_balance, account_active) "
+					+ "VALUES (?,?,?);";
+			
+			int count = 0;
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(++count, account.getAccountID());
+			statement.setFloat(++count, account.getBalance());
+			statement.setBoolean(++count, account.isActive());
+			
+			statement.execute();
+			
+			return true;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Account findAccount(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean removeAccount(Account x) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-// 	public ArrayList<Account> findAllAccounts() {
-// 		ArrayList<Account> allAccounts = new ArrayList<>();
-// 		try(Scanner scan = new Scanner(new File("src//main//resources//accounts.txt"))) {
-// 			while(scan.hasNextLine()) {
-// 				String accountString = scan.nextLine();
-// 				String[] accountParts = accountString.split(",");
-// 				allAccounts.add(new Account(accountParts[0], new Weapon(accountParts[1],
-// 						Integer.valueOf(accountParts[2]), Integer.valueOf(accountParts[3]), 
-// 						Element.valueOf(accountParts[4])), Integer.valueOf(accountParts[5]), Integer.valueOf(accountParts[6]),
-// 						Integer.valueOf(accountParts[7]), Integer.valueOf(accountParts[8])));
-// 			}
-// 		}catch(IOException e) {
-// 			 log.error("Something went wrong retieving players: "+e.getMessage());
-// //            System.out.println(e.getMessage());
-// 		}
-// 		return allAccounts;
-// 	}
+	@Override
+	public Account findByID(String account_id) {
+        try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
+			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, account_id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			Account account = new Account();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
+			//with a while loop to iterate through all the data. 
+			
+			if(result.next()) {
+				
+				account.setAccountID(result.getString("account_id"));
+				account.setBalance(result.getFloat("account_balance"));
+				account.setActive(result.getBoolean("account_active"));
+			}
+			
+			return account;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

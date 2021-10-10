@@ -7,8 +7,8 @@ import java.util.UUID;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
-import com.revature.services.AccountService;
-import com.revature.utils.controllerUtil;
+import com.revature.services.CustomerService;
+import com.revature.utils.ControllerUtil;
 	
 /**
  * Customers should be able to register with a user name and password, 
@@ -17,14 +17,14 @@ import com.revature.utils.controllerUtil;
  * Once the account has been approved, customers should be able to 
  * withdraw/deposit/transfer funds between their accounts
  */
-public class CustomerController extends controllerUtil {
+public class CustomerController extends ControllerUtil {
 
-	private static AccountService accountService = new AccountService();
+	private static CustomerService customerService = new CustomerService();
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
     @Override
-	public void menu(String userID, ArrayList<Account>bankAccounts, ArrayList<Customer>profiles){
+	public void menu(){
 		do { 
 			System.out.println();
 			System.out.println("Please choose an option: ");		
@@ -39,25 +39,26 @@ public class CustomerController extends controllerUtil {
 			int response = scan.nextInt();
 			
 			switch (response) {
-				case 1:
-					String name = getUserName(bankAccounts, userID);
-					Account account = null;
-					account = buildBankAccount(name, account);
-					accountService.addToList(account, bankAccounts);
-					accountService.save(account);
-                    System.out.println("Congrats " + name + "! You opened a new bank account");
-					break;
-				case 2:
-					deposit(bankAccounts);
-					break;
-				case 3:
-					withdraw(bankAccounts);
-					break;
-				case 4:
-					transfer(bankAccounts);
-					break;
+				// case 1:
+				// 	String name = getUserName(bankAccounts, userID);
+				// 	Account account = null;
+				// 	account = buildBankAccount(name, account);
+				// 	accountService.addToList(account, bankAccounts);
+				// 	accountService.save(account);
+                //     System.out.println("Congrats " + name + "! You opened a new bank account");
+				// 	break;
+				// case 2:
+				// 	deposit(bankAccounts);
+				// 	break;
+				// case 3:
+				// 	withdraw(bankAccounts);
+				// 	break;
+				// case 4:
+				// 	transfer(bankAccounts);
+				// 	break;
 				case 5:
-					viewAccounts(bankAccounts);
+					// class example
+					viewProfiles();
 					break;
 		
 				default:

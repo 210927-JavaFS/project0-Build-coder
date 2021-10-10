@@ -1,62 +1,90 @@
 package com.revature.daos;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.Connection;
 
- import org.slf4j.Logger;
- import org.slf4j.LoggerFactory;
+import java.util.List;
+import java.util.ArrayList;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.utils.ConnectionUtil;
 
-public class CustomerDAOImpl {
+public class CustomerDAOImpl implements CustomerDAO{
 	
 	private static Logger log = LoggerFactory.getLogger(CustomerDAOImpl.class);
-	public String txtFile = "./src/main/resources/customer.txt";
-	public void writeProfile(Customer profile) {
-		File profiles = new File(txtFile);
-		
-		try {
-			if(profiles.createNewFile()) {
-				 log.info("Created new customer file");
-//                System.out.println("Created new players file");
-			}else {
-				 log.info("customer file already exists");
-//                System.out.println("players file already exists");
+	private AccountDAO accountDAO = new AccountDAOImpl();
+
+	// class example
+	@Override
+	public List<Customer> findAll() {
+		try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
+			String sql = "SELECT * FROM customers;";
+			
+			Statement statement = conn.createStatement();
+			
+			ResultSet result = statement.executeQuery(sql);
+			
+			List<Customer> list = new ArrayList<>();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
+			//with a while loop to iterate through all the data. 
+			
+			while(result.next()) {
+				Customer customer = new Customer(
+						result.getString("customer_id"), 
+						result.getString("customer_name"),
+						result.getString("customer_password"),
+						null // account object
+						);
+				String account_id = result.getString("account_id");
+
+				if(account_id!=null) {
+					Account account = accountDAO.findByID(account_id);
+					customer.setAccount(account);
+				}
+				
+				list.add(customer);
 			}
-		}catch(IOException e) {
-			 log.error("Something went wrong trying to access customer file: "+e.getMessage());
-//            System.out.println(e.getMessage());
+			
+			return list;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		try(FileWriter writer = new FileWriter(txtFile, true)){
-			StringBuilder builder = new StringBuilder(profile.getId());
-			builder.append(","+profile.getName());
-			builder.append(","+profile.getId());
-			builder.append(","+profile.getPassword()+"\n");
-			String profileString = new String(builder);
-			writer.write(profileString);
-		}catch(IOException e) {
-			 log.error("Could not write to file: "+e.getMessage());
-//            System.out.println(e.getMessage());
-		}	
+		return null;
 	}
 
-// 	public ArrayList<Customer> findAllCustomers() {
-// 		ArrayList<Customer> allCustomers = new ArrayList<>();
-// 		try(Scanner scan = new Scanner(new File("src//main//resources//Customers.txt"))) {
-// 			while(scan.hasNextLine()) {
-// 				String customerString = scan.nextLine();
-// 				String[] customerParts = customerString.split(",");
-// 				allCustomers.add(new Customer(customerParts[0], new Weapon(customerParts[1],
-// 						Integer.valueOf(customerParts[2]), Integer.valueOf(customerParts[3]), 
-// 						Element.valueOf(customerParts[4])), Integer.valueOf(customerParts[5]), Integer.valueOf(customerParts[6]),
-// 						Integer.valueOf(customerParts[7]), Integer.valueOf(customerParts[8])));
-// 			}
-// 		}catch(IOException e) {
-// 			 log.error("Something went wrong retieving players: "+e.getMessage());
-// //            System.out.println(e.getMessage());
-// 		}
-// 		return allCustomers;
-// 	}
+
+	@Override
+	public Customer findProfile(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean addProfile(Customer x) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean removeProfile(Customer x) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public Customer findByName(String customer_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setAccount(Customer x){
+
+	}
 }

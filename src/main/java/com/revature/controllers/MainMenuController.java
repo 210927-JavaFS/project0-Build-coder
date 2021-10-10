@@ -1,21 +1,10 @@
 package com.revature.controllers;
 
 import java.util.Scanner;
-// temporarily using Array's in this class
-import java.util.ArrayList;
-
-// temporarily using models in this class
-import com.revature.models.*;
 
 public class MainMenuController {
 
     public void mainMenu() {
-        // since we have yet to set up a database, I'm gonna
-		// store the lists of bank accounts and customer accounts here
-		// temporarily
-		ArrayList<Customer> customerProfiles = new ArrayList<>();
-		ArrayList<Employee> employeeProfiles = new ArrayList<>();
-		ArrayList<Account> bankAccounts = new ArrayList<>();
 
 		boolean running = true;
 
@@ -37,21 +26,21 @@ public class MainMenuController {
 			switch (response) {
 				case 1:
 					CustomerController customerController = new CustomerController();
-					String userID = customerController.customerLogin(customerProfiles);
-					customerController.menu(userID, bankAccounts, customerProfiles);
+					// customerController.customerLogin();
+					customerController.menu();
 					break;
 
-				case 2:
-					TellerController tellerController = new TellerController();
-					String tellerID = tellerController.employeeLogin(employeeProfiles);
-					tellerController.menu(tellerID, bankAccounts, customerProfiles);
-					break;
+				// case 2:
+				// 	TellerController tellerController = new TellerController();
+				// 	String tellerID = tellerController.employeeLogin();
+				// 	tellerController.menu(tellerID);
+				// 	break;
 
-				case 3:
-					ManagerController managerController = new ManagerController();
-					String managerID = managerController.employeeLogin(employeeProfiles);
-					managerController.menu(managerID, bankAccounts, customerProfiles);
-					break;
+				// case 3:
+				// 	ManagerController managerController = new ManagerController();
+				// 	String managerID = managerController.employeeLogin();
+				// 	managerController.menu(managerID);
+				// 	break;
 
 				default:
 					System.out.println("Thank you, have a good day!");

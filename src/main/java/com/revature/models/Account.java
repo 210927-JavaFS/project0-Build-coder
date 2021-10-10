@@ -1,19 +1,20 @@
 package com.revature.models;
 
+import java.util.Objects;
+
 public class Account {
-    private String name;
 	private String accountID;
-	private int balance;
+	private float balance;
 	private boolean active;
 
-	public Account(String name, String accountID, int balance, boolean active) {
-		this.name = name;
+	public Account(String accountID, float balance, boolean active) {
+		super();
 		this.accountID = accountID;
 		this.balance = balance;
 		this.active = active;
 	}
-	
-	Account(){
+
+	public Account(){
 		super();
 	}
 
@@ -25,14 +26,6 @@ public class Account {
 		this.active = active;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getAccountID() {
 		return accountID;
 	}
@@ -41,22 +34,34 @@ public class Account {
 		this.accountID = accountID;
 	}
 
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 
-    @Override
+	@Override
+	public int hashCode() {
+		return Objects.hash(accountID, active, balance);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		return true;
+		Account other = (Account) obj;
+		return Objects.equals(accountID, other.accountID) && active == other.active
+				&& Float.floatToIntBits(balance) == Float.floatToIntBits(other.balance);
+	}
+
+	@Override
+	public String toString() {
+		return "Account [accountID=" + accountID + ", active=" + active + ", balance=" + balance + "]";
 	}
 }

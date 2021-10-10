@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.daos.CustomerDAOImpl;
 import com.revature.models.Account;
@@ -8,7 +9,6 @@ import com.revature.models.Customer;
 
 public class CustomerService {
 
-	private ArrayList<Customer> allAccounts = new ArrayList<>();
 	private static CustomerDAOImpl customerDAO = new CustomerDAOImpl();
 
 	public Customer createAccount(String name, String password, String id, Account account) {
@@ -21,6 +21,11 @@ public class CustomerService {
     }
 
 	public void save(Customer profile) {
-		customerDAO.writeProfile(profile);
+		
+	}
+
+	// class example
+	public List<Customer> getAllProfiles(){
+		return customerDAO.findAll();
 	}
 }
