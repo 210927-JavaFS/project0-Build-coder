@@ -28,7 +28,7 @@ public class ManagerController extends ControllerUtil {
 			System.out.println();
 			System.out.println("Please choose an option: ");		
 			System.out.println("1: Approve/Deny an Application");
-			System.out.println("2: View Customer Pofiles");
+			System.out.println("2: View Customer Profiles");
 			System.out.println("3: View Bank Account");
 			System.out.println("4: Deposit");
 			System.out.println("5: Withdraw");
@@ -41,10 +41,9 @@ public class ManagerController extends ControllerUtil {
 			int response = scan.nextInt();
 			
 			switch (response) {
-				// case 1:
-				// 	// first account in the list hard coded is for now
-				// 	approveAccount(bankAccounts.get(0));
-				// 	break;
+				case 1:
+					activateAccount();
+					break;
 				case 2:
 					viewProfiles();
 					break;
@@ -61,14 +60,9 @@ public class ManagerController extends ControllerUtil {
 					transfer();
 					break;
 				case 7:
-					// remove bank account
 					cancelAccount();
 					break;
 				case 8:
-					/**
-					 * Not sure if I need this functionality
-					 * Might have to set the account_id to null
-					 */
 					cancelProfile();
 					break;
 

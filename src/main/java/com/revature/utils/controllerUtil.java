@@ -81,7 +81,7 @@ public abstract class ControllerUtil {
 	}
 
 	public void deposit(){
-		Scanner scan = createScanner();
+		scan = createScanner();
 		System.out.println("Which account would you like to deposit money in?");
 		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
@@ -93,7 +93,7 @@ public abstract class ControllerUtil {
 	}
 
 	public void withdraw(){
-		Scanner scan = createScanner();
+		scan = createScanner();
 		System.out.println("Which account would you like to withdraw money from?");
 		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
@@ -105,7 +105,7 @@ public abstract class ControllerUtil {
 	}
 
 	public void transfer(){
-		Scanner scan = createScanner();
+		scan = createScanner();
 		System.out.println("Which account do you want to transfer money from?");
 		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
@@ -137,20 +137,25 @@ public abstract class ControllerUtil {
 		}
 	}
 
-	public void activateAccount(Account x){
-		boolean active = x.isActive();
+	public void activateAccount(){
+		scan = createScanner();
+		System.out.println("Which account would you like to activate?");
+		viewAccounts();
+		String accountID = scan.nextLine();
+		Account account = findByAccountID(accountID);
+		boolean active = account.isActive();
 
 		if (!active) {
 			scan = createScanner();
-			System.out.println("Do you want to activate account: " + x + "?");
+			System.out.println("Do you want to activate account: " + account + "?");
 			System.out.println("Type 'yes' or 'no");
 			String response = scan.nextLine();
 			
 			if (response == "yes") {
-				x.setActive(true);
-				System.out.println("Account: " + x + " is now active");
+				account.setActive(true);
+				System.out.println("Account: " + account + " is now active");
 			} else{
-				System.out.println("Account: " + x + " remains inactive");
+				System.out.println("Account: " + account + " remains inactive");
 			}
 		} else{
 			System.out.println("Account is active");
@@ -193,7 +198,7 @@ public abstract class ControllerUtil {
 	}
 
 	public void cancelAccount(){
-		Scanner scan = createScanner();
+		scan = createScanner();
 		System.out.println("Which account would you like to cancel?");
 		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
@@ -203,7 +208,7 @@ public abstract class ControllerUtil {
 	}
 
 	public void cancelProfile(){
-		Scanner scan = createScanner();
+		scan = createScanner();
 		System.out.println("Which account would you like to cancel?");
 		viewProfiles();
 		System.out.println("Please enter the Customer's ID: ");
