@@ -1,10 +1,7 @@
 package com.revature.controllers;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.revature.models.Account;
-import com.revature.models.Customer;
 import com.revature.utils.ControllerUtil;
 
 /**
@@ -34,14 +31,13 @@ public class TellerController extends ControllerUtil{
 			
 			switch (response) {
 				case 1:
-					// first account in the list hard coded is for now
-					activateAccount(x);
+					activateAccount();
 					break;
 				case 2:
-					viewCustomerProfiles(profiles);
+					viewProfiles();
 					break;
 				case 3:
-					viewAccounts(bankAccounts);
+					viewAccounts();
 					break;
 				default:
 					System.out.println("Exited teller interface");

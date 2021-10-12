@@ -24,17 +24,15 @@ public class MainMenuController {
 			int response = scan.nextInt();
 			
 			switch (response) {
-				// case 1:
-				// 	CustomerController customerController = new CustomerController();
-					// customerController.customerLogin();
-					// customerController.menu();
-					// break;
+				case 1:
+					CustomerController customerController = new CustomerController();
+					customerController.menu();
+					break;
 
-				// case 2:
-				// 	TellerController tellerController = new TellerController();
-				// 	String tellerID = tellerController.employeeLogin();
-				// 	tellerController.menu(tellerID);
-				// 	break;
+				case 2:
+					TellerController tellerController = new TellerController();
+					tellerController.menu();
+					break;
 
 				case 3:
 					ManagerController managerController = new ManagerController();

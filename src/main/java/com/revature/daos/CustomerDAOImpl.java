@@ -53,20 +53,40 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public boolean addProfile(Customer x) {
-		// TODO Auto-generated method stub
+	public boolean addProfile(Customer c) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			
+			String sql = "INSERT INTO customers (customer_id, customer_name, customer_password)"
+					+ "VALUES (?,?,?)";
+
+
+			int count = 0;
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(++count, c.getId());
+			statement.setString(++count, c.getName());
+			statement.setString(++count, c.getPassword());;
+			
+			statement.execute();
+			
+			return true;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
 	@Override
-	public boolean removeProfile(Customer x) {
+	public boolean removeProfile(Customer c) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 
 			String sql = "DELETE FROM customers WHERE customer_id = ?";
 				
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setObject(1, x.getId());
+			statement.setObject(1, c.getId());
 		
 			statement.execute();
 			
@@ -80,7 +100,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	@Override
 	public Customer findByID(String customer_id) {
 		try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
-			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
+			String sql = "SELECT * FROM customers WHERE customer_id = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			

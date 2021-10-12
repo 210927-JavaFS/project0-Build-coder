@@ -1,27 +1,21 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.daos.CustomerDAOImpl;
-import com.revature.models.Account;
 import com.revature.models.Customer;
 
 public class CustomerService {
 
 	private static CustomerDAOImpl customerDAO = new CustomerDAOImpl();
 
-	public Customer createAccount(String name, String password, String id, Account account) {
-		return new Customer(name, password, id, account);
-	}
 
-    public void addToList(Customer x, ArrayList<Customer>profiles){
-		// allAccounts.add(x);
-		profiles.add(x);
-    }
+	public void createAccount(String id, String name, String password, String encryptPass){
+		Customer c = new Customer(id, name, password);
 
-	public void save(Customer profile) {
-		
+		// only write encrypted password to db
+		c.setPassword(encryptPass);
+		customerDAO.addProfile(c);
 	}
 
 	// class example
@@ -29,7 +23,7 @@ public class CustomerService {
 		return customerDAO.findAll();
 	}
 
-	public void remove(Customer x){
-		customerDAO.removeProfile(x);
+	public void remove(Customer c){
+		customerDAO.removeProfile(c);
 	}
 }

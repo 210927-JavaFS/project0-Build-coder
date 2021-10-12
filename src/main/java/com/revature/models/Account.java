@@ -28,6 +28,16 @@ public class Account {
 		this.customer = customer;
 	}
 
+	// not sure if this is legal but i think i need it
+	public String getCustomerID(){
+		return customer.getId();
+	}
+
+	// not sure if this is legal but i think i need it
+	public void setCustomerID(String customerID){
+		this.customer.setId(customerID);
+	}
+
 	public boolean isActive() {
 		return active;
 	}

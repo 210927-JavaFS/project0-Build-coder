@@ -1,7 +1,13 @@
 package com.revature.utils;
 
+
 import java.util.Scanner;
 import java.util.UUID;
+
+// encryption imports
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,26 +25,22 @@ public abstract class ControllerUtil {
 	private static boolean running = true;
 	Scanner scan = createScanner();
 
-	public String createProfile(){
+	public String createProfile() throws Exception{
 		do {
-			String name, password, id;
+			String name, password, id, encryptPass;
 
 			System.out.println("Please enter your name: ");
 			name = scan.nextLine();
 			System.out.println("Please enter your password: ");
 			password = scan.nextLine();
 			id = UUID.randomUUID().toString();
+			encryptPass = encrypt(password, id);
 
 			if (!(name.isEmpty() || password.isEmpty())) {
-				Account emptyAccount = null;
-				Customer profile = customerService.createAccount(name,password,id,emptyAccount);
-				customerService.addToList(profile, profiles);
-				customerService.save(profile);
+				customerService.createAccount(id,name,password,encryptPass);
 				System.out.println();
 				System.out.println("Congrats " + name + " you have created a user account");
 				running = false;
-				profile.setName(name);
-				return profile.getId();
 			} else {
 				System.out.println();
 				System.out.println("Name and/or password is incomplete. Try again");
@@ -53,7 +55,55 @@ public abstract class ControllerUtil {
 		return "";
 	}
 
-	public void logIn(){
+	public boolean logIn(){
+		System.out.println("Please enter your name and password:");
+		System.out.println("Name: ");
+		String name = scan.nextLine();
+		System.out.println("Password: ");
+		String password = scan.nextLine();
+
+		/**
+		 * Query db and find all matches of "password"
+		 * Get first matches "id" and call decrpt(password, id)
+		 * if decrypt(password,id).equals(password) -> found user
+		 * else try next password match
+		 */
+
+		return false;
+	}
+
+	public static String encrypt(String strClearText,String strKey) throws Exception{
+		String strData="";
+		
+		try {
+			SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes(),"Blowfish");
+			Cipher cipher=Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.ENCRYPT_MODE, skeyspec);
+			byte[] encrypted=cipher.doFinal(strClearText.getBytes());
+			strData=new String(encrypted);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		return strData;
+	}
+
+	public static String decrypt(String strEncrypted,String strKey) throws Exception{
+		String strData="";
+		
+		try {
+			SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes(),"Blowfish");
+			Cipher cipher=Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.DECRYPT_MODE, skeyspec);
+			byte[] decrypted=cipher.doFinal(strEncrypted.getBytes());
+			strData=new String(decrypted);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		return strData;
 	}
 
 	public Account findByAccountID(String accountID){
@@ -161,31 +211,6 @@ public abstract class ControllerUtil {
 			System.out.println("Account is active");
 		}
 	}
-
-	public void removeDuplicates(ArrayList<Account> customerAccounts){
-        // create a temp list
-        ArrayList<Account> newList = new ArrayList<Account>();
-  
-        // traverse through temp list
-        for (Account element : customerAccounts) {
-  
-            // if not a repeat, add it to temp list
-            if (!newList.contains(element)) {
-                newList.add(element);
-            }
-        }
-  
-		// remove list with repeats
-		customerAccounts.clear();
-
-		// rebuild customerAccounts with no repeats
-		for (Account account : newList) {
-			customerAccounts.add(account);
-		}
-
-		// clear temp list
-		newList.clear();
-    }
 	
 	/**
 	 * Helper method to create a Scanner object
@@ -215,6 +240,16 @@ public abstract class ControllerUtil {
 		String customerID = scan.nextLine();
 		Customer customer = findByCustomerID(customerID);
 		customerService.remove(customer);
+	}
+
+	public Account buildBankAccount(String name, Account account) {
+
+		String accountID = UUID.randomUUID().toString();
+		int balance = 0;
+		boolean active = false;
+		account=accountService.createAccount(name,accountID,balance, active);
+
+		return account;
 	}
 
 	public abstract void menu();

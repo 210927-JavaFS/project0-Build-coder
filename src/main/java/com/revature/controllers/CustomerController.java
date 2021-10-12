@@ -25,6 +25,14 @@ public class CustomerController extends ControllerUtil {
 
     @Override
 	public void menu(){
+
+	
+		if(logIn()){
+			// do-while loop here
+		} else {
+			createProfile();
+		}
+
 		do { 
 			System.out.println();
 			System.out.println("Please choose an option: ");		
@@ -39,14 +47,14 @@ public class CustomerController extends ControllerUtil {
 			int response = scan.nextInt();
 			
 			switch (response) {
-				// case 1:
-				// 	String name = getUserName(bankAccounts, userID);
-				// 	Account account = null;
-				// 	account = buildBankAccount(name, account);
-				// 	accountService.addToList(account, bankAccounts);
-				// 	accountService.save(account);
-                //     System.out.println("Congrats " + name + "! You opened a new bank account");
-				// 	break;
+				case 1:
+					String name = getUserName(bankAccounts, userID);
+					Account account = null;
+					account = buildBankAccount(name, account);
+					accountService.addToList(account, bankAccounts);
+					accountService.save(account);
+                    System.out.println("Congrats " + name + "! You opened a new bank account");
+					break;
 				// case 2:
 				// 	deposit(bankAccounts);
 				// 	break;
@@ -69,15 +77,5 @@ public class CustomerController extends ControllerUtil {
 		} while (running);
 
 		running = true;
-	}
-	
-	public Account buildBankAccount(String name, Account account) {
-
-		String accountID = UUID.randomUUID().toString();
-		int balance = 0;
-		boolean active = false;
-		account=accountService.createAccount(name,accountID,balance, active);
-
-		return account;
 	}
 }

@@ -1,38 +1,28 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.daos.AccountDAOImpl;
-import com.revature.models.Account;
+import com.revature.models.*;
 
 public class AccountService {
 
-	private ArrayList<Account> allAccounts = new ArrayList<>();
 	private static AccountDAOImpl accountDAO = new AccountDAOImpl();
 
-	public Account createAccount(String name, String accountID, int balance, boolean active) {
-		return new Account(name, accountID, balance, active);
+	public void createAccount(String id, float balance, boolean active, Customer c){
+		Account a = new Account(id, balance, active, c);
+
+		accountDAO.addAccount(a);
 	}
 
-	public void add(Account x, float amount) {
-		x.setBalance(x.getBalance() + amount);
-		accountDAO.updateBalance(x);
+	public void add(Account a, float amount) {
+		a.setBalance(a.getBalance() + amount);
+		accountDAO.updateBalance(a);
 	}
 
-	public void subtract(Account x, float amount) {
-		x.setBalance(x.getBalance() - amount);
-		accountDAO.updateBalance(x);
-	}
-
-    public void addToList(Account x, ArrayList<Account>bankAccounts){
-		// allAccounts.add(x);
-		bankAccounts.add(x);
-    }
-
-	public void updateAccount(Account x){
-		// if account == null, init account
-		
+	public void subtract(Account a, float amount) {
+		a.setBalance(a.getBalance() - amount);
+		accountDAO.updateBalance(a);
 	}
 
 	// class example
@@ -40,11 +30,7 @@ public class AccountService {
 		return accountDAO.findAll();
 	}
 
-	public void remove(Account x){
-		accountDAO.removeAccount(x);
-	}
-
-	public void save(Account account) {
-		accountDAO.writeAccount(account);
+	public void remove(Account a){
+		accountDAO.removeAccount(a);
 	}
 }

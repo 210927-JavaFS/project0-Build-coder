@@ -1,10 +1,6 @@
 package com.revature.controllers;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.revature.models.Account;
-import com.revature.models.Customer;
 import com.revature.utils.ControllerUtil;
 
 /**

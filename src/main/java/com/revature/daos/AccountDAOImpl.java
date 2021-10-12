@@ -62,19 +62,20 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public boolean addAccount(Account account) {
+	public boolean addAccount(Account a) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			
-			String sql = "INSERT INTO accounts (account_id, account_balance, account_active) "
-					+ "VALUES (?,?,?);";
+			String sql = "INSERT INTO accounts (account_id, account_balance, account_active, customer_id) "
+					+ "VALUES (?,?,?,?);";
 			
 			int count = 0;
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setString(++count, account.getAccountID());
-			statement.setFloat(++count, account.getBalance());
-			statement.setBoolean(++count, account.isActive());
+			statement.setString(++count, a.getAccountID());
+			statement.setFloat(++count, a.getBalance());
+			statement.setBoolean(++count, a.isActive());
+			statement.setString(++count, a.getCustomer().getId());
 			
 			statement.execute();
 			
@@ -87,14 +88,14 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public boolean removeAccount(Account x) {
+	public boolean removeAccount(Account a) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 
 			String sql = "DELETE FROM accounts WHERE account_id = ?";
 				
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setObject(1, x.getAccountID());
+			statement.setObject(1, a.getAccountID());
 		
 			statement.execute();
 			
@@ -108,12 +109,38 @@ public class AccountDAOImpl implements AccountDAO{
 
 	@Override
 	public Account findByID(String account_id) {
- 
+		try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
+			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, account_id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			Account account = new Account();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
+			//with a while loop to iterate through all the data. 
+			
+			if(result.next()) {
+				
+				account.setAccountID(result.getString("account_id"));
+				account.setBalance(result.getFloat("account_balance"));
+				account.setActive(result.getBoolean("account_active"));
+				account.setCustomerID(result.getString("customer_id"));
+			}
+			
+			return account;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public boolean updateBalance(Account x){
+	public boolean updateBalance(Account a){
 
 		try(Connection conn = ConnectionUtil.getConnection()){
 
@@ -124,8 +151,8 @@ public class AccountDAOImpl implements AccountDAO{
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setFloat(++count, x.getBalance());
-			statement.setString(++count, x.getAccountID());
+			statement.setFloat(++count, a.getBalance());
+			statement.setString(++count, a.getAccountID());
 			
 			statement.execute();
 			
