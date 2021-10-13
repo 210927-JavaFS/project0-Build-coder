@@ -1,6 +1,5 @@
 package com.revature.utils;
 
-
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -8,14 +7,13 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.services.*;
 
 // temporarily using models in this class
-import com.revature.models.Customer;
-import com.revature.models.Account;
+import com.revature.models.*;
+
 
 public abstract class ControllerUtil {
 
@@ -26,21 +24,25 @@ public abstract class ControllerUtil {
 	Scanner scan = createScanner();
 
 	public String createProfile() throws Exception{
+		System.out.println("Create new profile:");
 		do {
-			String name, password, id, encryptPass;
+			String name, password, id, pin, encryptPass;
 
 			System.out.println("Please enter your name: ");
 			name = scan.nextLine();
-			System.out.println("Please enter your password: ");
+			System.out.println("Please enter a password: ");
 			password = scan.nextLine();
+			System.out.println("Please enter a 4 digit pin number");
+			pin = scan.nextLine();
 			id = UUID.randomUUID().toString();
-			encryptPass = encrypt(password, id);
+			encryptPass = encrypt(password, pin);
 
 			if (!(name.isEmpty() || password.isEmpty())) {
 				customerService.createAccount(id,name,password,encryptPass);
 				System.out.println();
-				System.out.println("Congrats " + name + " you have created a user account");
+				System.out.println("Congrats " + name + " you have created a user profile");
 				running = false;
+				return id;
 			} else {
 				System.out.println();
 				System.out.println("Name and/or password is incomplete. Try again");
@@ -55,21 +57,45 @@ public abstract class ControllerUtil {
 		return "";
 	}
 
-	public boolean logIn(){
-		System.out.println("Please enter your name and password:");
-		System.out.println("Name: ");
-		String name = scan.nextLine();
-		System.out.println("Password: ");
-		String password = scan.nextLine();
+	public String logIn(){
+		String name, password, pin, decryptPass;
 
-		/**
-		 * Query db and find all matches of "password"
-		 * Get first matches "id" and call decrpt(password, id)
-		 * if decrypt(password,id).equals(password) -> found user
-		 * else try next password match
-		 */
+		System.out.println("Log in to profile:");
+		System.out.println("Please enter your name: ");
+		name = scan.nextLine();
+		System.out.println("Please enter your password: ");
+		password = scan.nextLine();
+		System.out.println("Please enter your 4 digit pin number");
+		pin = scan.nextLine();
+		try {
+			decryptPass = decrypt(password, pin);
 
-		return false;
+			String id = findByPassword(name, password);
+
+			if(findByPassword(name, decryptPass) != ""){
+				System.out.println("Welcome back " + name);
+				return id;
+			} else {
+				System.out.println("We could not find your record in our database");
+				System.out.println("Goodbye");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	public String findByPassword(String name, String password){
+
+		System.out.println("Here are all the Customer Profiles:");
+		List<Customer> list = customerService.getAllProfiles();
+		for(Customer c:list) {
+			if ((c.getName().equals(name)) && (c.getPassword().equals(password))) {
+				return c.getId();
+			}
+		}
+		return "";
 	}
 
 	public static String encrypt(String strClearText,String strKey) throws Exception{
@@ -240,16 +266,6 @@ public abstract class ControllerUtil {
 		String customerID = scan.nextLine();
 		Customer customer = findByCustomerID(customerID);
 		customerService.remove(customer);
-	}
-
-	public Account buildBankAccount(String name, Account account) {
-
-		String accountID = UUID.randomUUID().toString();
-		int balance = 0;
-		boolean active = false;
-		account=accountService.createAccount(name,accountID,balance, active);
-
-		return account;
 	}
 
 	public abstract void menu();

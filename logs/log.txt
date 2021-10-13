@@ -45,3 +45,7 @@
 13:20:18.440 [] [main] INFO  com.revature.daos.AccountDAOImpl - players file already exists
 13:20:20.429 [] [main] INFO  com.revature.daos.AccountDAOImpl - players file already exists
 13:20:59.062 [] [main] INFO  com.revature.daos.EmployeeDAOImpl - players file already exists
+10:18:53.317 [] [main] INFO  com.revature.utils.ControllerUtil - In setControllerUtil
+10:18:53.392 [] [main] INFO  com.revature.utils.ControllerUtil - in clearMathUtil
+10:19:23.063 [] [main] INFO  com.revature.utils.ControllerUtil - In setControllerUtil
+10:19:23.121 [] [main] INFO  com.revature.utils.ControllerUtil - in clearMathUtil
