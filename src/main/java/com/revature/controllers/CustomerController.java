@@ -49,9 +49,11 @@ public class CustomerController extends ControllerUtil {
 					case 1:
 						Customer c;
 						c = findByCustomerID(id);
-						String customerID = UUID.randomUUID().toString();
-						accountService.createAccount(customerID, 0, true, c);
-						System.out.println("Congrats " + c.getName() + "! You opened a new bank account");
+						String accountID = UUID.randomUUID().toString();
+						accountID = cutString(accountID);
+						accountService.createAccount(accountID, 0, true, c);
+						System.out.println("Congrats " + c.getName() + 
+						"! You opened a new bank account");
 						break;
 					case 2:
 						// needs to only display customer's account(s)
@@ -77,11 +79,16 @@ public class CustomerController extends ControllerUtil {
 			} while (running);
 	
 			running = true;
+
+		} else if(id == "yes"){
+			id = logIn();
+
 		} else {
 			try {
 				id = createProfile();
 			} catch (Exception e) {
 				//TODO: handle exception
+				System.out.println(e.getMessage());
 			}
 		}
 	}

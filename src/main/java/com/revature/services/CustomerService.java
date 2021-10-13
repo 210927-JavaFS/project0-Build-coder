@@ -11,6 +11,9 @@ public class CustomerService {
 
 
 	public void createAccount(String id, String name, String password, String encryptPass){
+		name = name.toLowerCase();
+		password = password.toLowerCase();
+		encryptPass = encryptPass.toLowerCase();
 		Customer c = new Customer(id, name, password);
 
 		// only write encrypted password to db

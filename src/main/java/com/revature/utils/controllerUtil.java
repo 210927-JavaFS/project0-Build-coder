@@ -29,6 +29,7 @@ public abstract class ControllerUtil {
 			System.out.println("Please enter a password: ");
 			password = scan.nextLine();
 			id = UUID.randomUUID().toString();
+			id = cutString(id);
 			encryptPass = encryptionUtil.encrypt(password);
 
 			if (!(name.isEmpty() || password.isEmpty())) {
@@ -52,30 +53,45 @@ public abstract class ControllerUtil {
 	}
 
 	public String logIn(){
-		String name, password;
+		do {
+			String name, password;
 
-		System.out.println("Log in to profile:");
-		System.out.println("Please enter your name: ");
-		name = scan.nextLine();
-		System.out.println("Please enter your password: ");
-		password = scan.nextLine();
+			System.out.println("Log in to profile:");
+			System.out.println("Please enter your name: ");
+			name = scan.nextLine();
+			System.out.println("Please enter your password: ");
+			password = scan.nextLine();
+			name = name.toLowerCase();
+			password = password.toLowerCase();
 
-		try {
+			try {
 
-			String id = findByPassword(name, password);
+				String id = findByPassword(name, password);
 
-			if(id != ""){
-				System.out.println("Welcome back " + name);
-				return id;
-			} else {
-				System.out.println("We could not find your record in our database");
-				System.out.println("You need to create a new profile");
-				System.out.println();
+				if(id != ""){
+					System.out.println("Welcome back " + name);
+					return id;
+				} else {
+					String response;
+					System.out.println();
+					System.out.println("We could not find your record in our database");
+					System.out.println("You may need to create a new profile");
+					System.out.println("Would you like to try and log in again? Type 'yes'");
+					response = scan.nextLine();
+					System.out.println();
+
+					if (response.equals("yes")) {
+						running = true;
+					} else {
+						running = false;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}while(running);
+		
+		running = true;
 		return "";
 	}
 
@@ -205,6 +221,16 @@ public abstract class ControllerUtil {
 		Scanner scan = new Scanner(System.in);
 		
 		return scan;
+	}
+
+		/**
+	 * Helper method to cut a String object
+	 * @return String
+	 */
+	public String cutString(String str){
+		String newStr = str.substring(0,5);
+		
+		return newStr;
 	}
 
 	public void cancelAccount(){
