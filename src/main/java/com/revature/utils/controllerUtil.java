@@ -2,11 +2,6 @@ package com.revature.utils;
 
 import java.util.Scanner;
 import java.util.UUID;
-
-// encryption imports
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
 import java.util.List;
 
 import com.revature.services.*;
@@ -19,6 +14,7 @@ public abstract class ControllerUtil {
 
 	private static CustomerService customerService = new CustomerService();
 	private static AccountService accountService = new AccountService();
+	private static EncryptionUtil encryptionUtil = new EncryptionUtil();
 
 	private static boolean running = true;
 	Scanner scan = createScanner();
@@ -26,16 +22,14 @@ public abstract class ControllerUtil {
 	public String createProfile() throws Exception{
 		System.out.println("Create new profile:");
 		do {
-			String name, password, id, pin, encryptPass;
+			String name, password, id, encryptPass;
 
 			System.out.println("Please enter your name: ");
 			name = scan.nextLine();
 			System.out.println("Please enter a password: ");
 			password = scan.nextLine();
-			System.out.println("Please enter a 4 digit pin number");
-			pin = scan.nextLine();
 			id = UUID.randomUUID().toString();
-			encryptPass = encrypt(password, pin);
+			encryptPass = encryptionUtil.encrypt(password);
 
 			if (!(name.isEmpty() || password.isEmpty())) {
 				customerService.createAccount(id,name,password,encryptPass);
@@ -58,26 +52,25 @@ public abstract class ControllerUtil {
 	}
 
 	public String logIn(){
-		String name, password, pin, decryptPass;
+		String name, password;
 
 		System.out.println("Log in to profile:");
 		System.out.println("Please enter your name: ");
 		name = scan.nextLine();
 		System.out.println("Please enter your password: ");
 		password = scan.nextLine();
-		System.out.println("Please enter your 4 digit pin number");
-		pin = scan.nextLine();
+
 		try {
-			decryptPass = decrypt(password, pin);
 
 			String id = findByPassword(name, password);
 
-			if(findByPassword(name, decryptPass) != ""){
+			if(findByPassword(name, password) != ""){
 				System.out.println("Welcome back " + name);
 				return id;
 			} else {
 				System.out.println("We could not find your record in our database");
-				System.out.println("Goodbye");
+				System.out.println("You need to create a new profile");
+				System.out.println();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -88,48 +81,14 @@ public abstract class ControllerUtil {
 
 	public String findByPassword(String name, String password){
 
-		System.out.println("Here are all the Customer Profiles:");
 		List<Customer> list = customerService.getAllProfiles();
 		for(Customer c:list) {
+			password = encryptionUtil.decrypt(password);
 			if ((c.getName().equals(name)) && (c.getPassword().equals(password))) {
 				return c.getId();
 			}
 		}
 		return "";
-	}
-
-	public static String encrypt(String strClearText,String strKey) throws Exception{
-		String strData="";
-		
-		try {
-			SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes(),"Blowfish");
-			Cipher cipher=Cipher.getInstance("Blowfish");
-			cipher.init(Cipher.ENCRYPT_MODE, skeyspec);
-			byte[] encrypted=cipher.doFinal(strClearText.getBytes());
-			strData=new String(encrypted);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e);
-		}
-		return strData;
-	}
-
-	public static String decrypt(String strEncrypted,String strKey) throws Exception{
-		String strData="";
-		
-		try {
-			SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes(),"Blowfish");
-			Cipher cipher=Cipher.getInstance("Blowfish");
-			cipher.init(Cipher.DECRYPT_MODE, skeyspec);
-			byte[] decrypted=cipher.doFinal(strEncrypted.getBytes());
-			strData=new String(decrypted);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e);
-		}
-		return strData;
 	}
 
 	public Account findByAccountID(String accountID){

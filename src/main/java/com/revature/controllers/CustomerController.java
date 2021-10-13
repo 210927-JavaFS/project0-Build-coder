@@ -24,7 +24,6 @@ public class CustomerController extends ControllerUtil {
 	private static CustomerService customerService = new CustomerService();
 	private static AccountService accountService = new AccountService();
 
-
 	Scanner scan = createScanner();
 
     @Override
@@ -32,7 +31,7 @@ public class CustomerController extends ControllerUtil {
 
 		String id = logIn();
 
-		if(logIn() != ""){
+		if(id != ""){
 			do { 
 				System.out.println();
 				System.out.println("Please choose an option: ");		
