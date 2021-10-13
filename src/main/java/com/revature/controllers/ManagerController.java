@@ -38,6 +38,7 @@ public class ManagerController extends ControllerUtil {
 			
 			switch (response) {
 				case 1:
+					viewAccounts();
 					activateAccount();
 					break;
 				case 2:

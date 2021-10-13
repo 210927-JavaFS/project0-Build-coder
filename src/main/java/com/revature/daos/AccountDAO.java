@@ -20,4 +20,6 @@ public interface AccountDAO {
 	// boolean to return true/false if it pass/failed
 	public boolean updateBalance(Account a);
 
+	// boolean to return true/false if it pass/failed
+	public boolean updateActive(Account a);
 }

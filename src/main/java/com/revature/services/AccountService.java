@@ -33,4 +33,9 @@ public class AccountService {
 	public void remove(Account a){
 		accountDAO.removeAccount(a);
 	}
+
+	public void updateAccountStatus(Account a){
+		a.setActive(true);
+		accountDAO.updateActive(a);
+	}
 }

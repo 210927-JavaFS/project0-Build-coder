@@ -197,7 +197,7 @@ public abstract class ControllerUtil {
 		System.out.println("Here are all your Accounts:");
 		List<Account> list = accountService.getAllAccounts();
 		for (Account a:list) {
-			if (a.getCustomerID().equals(id)) {
+			if ((a.getCustomerID().equals(id)) && (a.isActive())) {
 				System.out.println(a);
 			}
 		}
@@ -206,22 +206,21 @@ public abstract class ControllerUtil {
 	public void activateAccount(){
 		scan = createScanner();
 		System.out.println("Which account would you like to activate?");
-		viewAccounts();
 		String accountID = scan.nextLine();
-		Account account = findByAccountID(accountID);
-		boolean active = account.isActive();
+		Account a = findByAccountID(accountID);
+		boolean active = a.isActive();
 
 		if (!active) {
 			scan = createScanner();
-			System.out.println("Do you want to activate account: " + account + "?");
+			System.out.println("Do you want to activate account: " + a + "?");
 			System.out.println("Type 'yes' or 'no");
 			String response = scan.nextLine();
 			
-			if (response == "yes") {
-				account.setActive(true);
-				System.out.println("Account: " + account + " is now active");
+			if (response.equals("yes")) {
+				accountService.updateAccountStatus(a);
+				System.out.println("Account: " + a + " is now active");
 			} else{
-				System.out.println("Account: " + account + " remains inactive");
+				System.out.println("Account: " + a + " remains inactive");
 			}
 		} else{
 			System.out.println("Account is active");
@@ -251,7 +250,6 @@ public abstract class ControllerUtil {
 	public void cancelAccount(){
 		scan = createScanner();
 		System.out.println("Which account would you like to cancel?");
-		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
 		String accountID = scan.nextLine();
 		Account account = findByAccountID(accountID);
@@ -261,7 +259,6 @@ public abstract class ControllerUtil {
 	public void cancelProfile(){
 		scan = createScanner();
 		System.out.println("Which account would you like to cancel?");
-		viewProfiles();
 		System.out.println("Please enter the Customer's ID: ");
 		String customerID = scan.nextLine();
 		Customer customer = findByCustomerID(customerID);

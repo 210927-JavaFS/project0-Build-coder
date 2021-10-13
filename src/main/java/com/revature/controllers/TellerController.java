@@ -31,6 +31,7 @@ public class TellerController extends ControllerUtil{
 			
 			switch (response) {
 				case 1:
+					viewAccounts();
 					activateAccount();
 					break;
 				case 2:
