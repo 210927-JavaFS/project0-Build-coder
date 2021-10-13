@@ -64,7 +64,7 @@ public abstract class ControllerUtil {
 
 			String id = findByPassword(name, password);
 
-			if(findByPassword(name, password) != ""){
+			if(id != ""){
 				System.out.println("Welcome back " + name);
 				return id;
 			} else {
@@ -83,8 +83,8 @@ public abstract class ControllerUtil {
 
 		List<Customer> list = customerService.getAllProfiles();
 		for(Customer c:list) {
-			password = encryptionUtil.decrypt(password);
-			if ((c.getName().equals(name)) && (c.getPassword().equals(password))) {
+			if ((c.getName().equals(name)) && 
+				(encryptionUtil.decrypt(c.getPassword()).equals(password))) {
 				return c.getId();
 			}
 		}
