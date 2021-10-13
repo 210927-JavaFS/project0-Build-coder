@@ -47,18 +47,23 @@ public class ManagerController extends ControllerUtil {
 					viewAccounts();
 					break;
 				case 4:
+					viewAccounts();
 					deposit();
 					break;
 				case 5:
+					viewAccounts();
 					withdraw();
 					break;
 				case 6:
+					viewAccounts();
 					transfer();
 					break;
 				case 7:
+					viewAccounts();
 					cancelAccount();
 					break;
 				case 8:
+					viewProfiles();
 					cancelProfile();
 					break;
 

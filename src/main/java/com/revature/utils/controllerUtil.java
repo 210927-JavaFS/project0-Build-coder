@@ -5,8 +5,6 @@ import java.util.UUID;
 import java.util.List;
 
 import com.revature.services.*;
-
-// temporarily using models in this class
 import com.revature.models.*;
 
 
@@ -95,6 +93,16 @@ public abstract class ControllerUtil {
 		return "";
 	}
 
+	/**
+	 * Technically find by name and password.
+	 * If two users have the same name and password
+	 * (should be unlikely) method will only return 
+	 * the customer id of whichever entry is first
+	 * 
+	 * @param name
+	 * @param password
+	 * @return customer id
+	 */
 	public String findByPassword(String name, String password){
 
 		List<Customer> list = customerService.getAllProfiles();
@@ -134,7 +142,6 @@ public abstract class ControllerUtil {
 	public void deposit(){
 		scan = createScanner();
 		System.out.println("Which account would you like to deposit money in?");
-		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
 		String accountID = scan.nextLine();
 		Account account = findByAccountID(accountID);
@@ -146,7 +153,6 @@ public abstract class ControllerUtil {
 	public void withdraw(){
 		scan = createScanner();
 		System.out.println("Which account would you like to withdraw money from?");
-		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
 		String accountID = scan.nextLine();
 		Account account = findByAccountID(accountID);
@@ -158,7 +164,6 @@ public abstract class ControllerUtil {
 	public void transfer(){
 		scan = createScanner();
 		System.out.println("Which account do you want to transfer money from?");
-		viewAccounts();
 		System.out.println("Please enter the Account's ID: ");
 		String fromAccountID = scan.nextLine();
 		Account fromAccount = findByAccountID(fromAccountID);
@@ -175,16 +180,26 @@ public abstract class ControllerUtil {
 	public void viewProfiles(){
 		System.out.println("Here are all the Customer Profiles:");
 		List<Customer> list = customerService.getAllProfiles();
-		for(Customer x:list) {
-			System.out.println(x);
+		for(Customer c:list) {
+			System.out.println(c);
 		}
 	}
 
 	public void viewAccounts(){
 		System.out.println("Here are all the Accounts:");
 		List<Account> list = accountService.getAllAccounts();
-		for(Account x:list) {
-			System.out.println(x);
+		for(Account a:list) {
+			System.out.println(a);
+		}
+	}
+
+	public void viewCustomersAccounts(String id){
+		System.out.println("Here are all your Accounts:");
+		List<Account> list = accountService.getAllAccounts();
+		for (Account a:list) {
+			if (a.getCustomerID().equals(id)) {
+				System.out.println(a);
+			}
 		}
 	}
 

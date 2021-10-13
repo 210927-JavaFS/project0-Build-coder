@@ -1,12 +1,8 @@
 package com.revature.controllers;
 
-// temporarily using Array's in this class
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
-import com.revature.daos.CustomerDAO;
-import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.services.*;
 import com.revature.utils.ControllerUtil;
@@ -21,7 +17,6 @@ import com.revature.utils.ControllerUtil;
 public class CustomerController extends ControllerUtil {
 
 	private static boolean running = true;
-	private static CustomerService customerService = new CustomerService();
 	private static AccountService accountService = new AccountService();
 
 	Scanner scan = createScanner();
@@ -57,19 +52,22 @@ public class CustomerController extends ControllerUtil {
 						break;
 					case 2:
 						// needs to only display customer's account(s)
+						viewCustomersAccounts(id);
 						deposit();
 						break;
 					case 3:
 						// needs to only display customer's account(s)
+						viewCustomersAccounts(id);
 						withdraw();
 						break;
 					case 4:
 						// needs to only display customer's account(s)
+						viewCustomersAccounts(id);
 						transfer();
 						break;
 					case 5:
 						// needs to only display customer's account(s)
-						viewAccounts();
+						viewCustomersAccounts(id);
 						break;
 		
 					default:
