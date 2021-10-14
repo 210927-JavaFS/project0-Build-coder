@@ -23,7 +23,7 @@ public class TellerController extends ControllerUtil{
 			System.out.println("Please choose an option: ");		
 			System.out.println("1: Approve/Deny an Application");
 			System.out.println("2: View Customer Profiles");
-			System.out.println("3: View Bank Account");
+			System.out.println("3: View Bank Accounts");
 			System.out.println("Enter any key that's not 1-3 to quit");
 			System.out.println();
 			

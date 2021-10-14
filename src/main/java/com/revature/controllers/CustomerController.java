@@ -30,7 +30,7 @@ public class CustomerController extends ControllerUtil {
 			do { 
 				System.out.println();
 				System.out.println("Please choose an option: ");		
-				System.out.println("1: Create a bank account");
+				System.out.println("1: Register for a new bank account");
 				System.out.println("2: Deposit");
 				System.out.println("3: Withdraw");
 				System.out.println("4: Transfer");

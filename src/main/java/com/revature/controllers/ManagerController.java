@@ -25,7 +25,7 @@ public class ManagerController extends ControllerUtil {
 			System.out.println("Please choose an option: ");		
 			System.out.println("1: Approve/Deny an Application");
 			System.out.println("2: View Customer Profiles");
-			System.out.println("3: View Bank Account");
+			System.out.println("3: View Bank Accounts");
 			System.out.println("4: Deposit");
 			System.out.println("5: Withdraw");
 			System.out.println("6: Transfer");

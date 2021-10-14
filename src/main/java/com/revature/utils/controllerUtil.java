@@ -194,7 +194,7 @@ public abstract class ControllerUtil {
 	}
 
 	public void viewCustomersAccounts(String id){
-		System.out.println("Here are all your Accounts:");
+		System.out.println("Here are all your Active Accounts:");
 		List<Account> list = accountService.getAllAccounts();
 		for (Account a:list) {
 			if ((a.getCustomerID().equals(id)) && (a.isActive())) {
@@ -247,6 +247,7 @@ public abstract class ControllerUtil {
 		return newStr;
 	}
 
+	
 	public void cancelAccount(){
 		scan = createScanner();
 		System.out.println("Which account would you like to cancel?");
@@ -261,8 +262,18 @@ public abstract class ControllerUtil {
 		System.out.println("Which account would you like to cancel?");
 		System.out.println("Please enter the Customer's ID: ");
 		String customerID = scan.nextLine();
-		Customer customer = findByCustomerID(customerID);
-		customerService.remove(customer);
+		Customer c = findByCustomerID(customerID);
+		deleteAllCustomerAccounts(c);
+		customerService.remove(c);
+	}
+
+	public void deleteAllCustomerAccounts(Customer c){
+		List<Account> list = accountService.getAllAccounts();
+		for (Account a:list) {
+			if ((a.getCustomer().getId()).equals(c.getId())) {
+				accountService.remove(a);
+			}
+		}
 	}
 
 	public abstract void menu();
