@@ -183,6 +183,7 @@ public abstract class ControllerUtil {
 		for(Customer c:list) {
 			System.out.println(c);
 		}
+		System.out.println();
 	}
 
 	public void viewAccounts(){
@@ -191,6 +192,7 @@ public abstract class ControllerUtil {
 		for(Account a:list) {
 			System.out.println(a.getCustomer().getName() +": " + a);
 		}
+		System.out.println();
 	}
 
 	public void viewCustomersAccounts(String id){
@@ -201,6 +203,7 @@ public abstract class ControllerUtil {
 				System.out.println(a);
 			}
 		}
+		System.out.println();
 	}
 
 	public void activateAccount(){
