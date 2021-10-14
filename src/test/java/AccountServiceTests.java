@@ -25,9 +25,10 @@ public class AccountServiceTests {
     public static AccountService accountServ; 
     public static Logger log = LoggerFactory.getLogger(AccountServiceTests.class);
 
-    public static String id = "12345";
+    public static String account_id = "12345";
     public static float balance = 0;
     public static boolean active = false;
+    public static String customer_id;
     public static Customer c = null;
 
     @BeforeAll
@@ -39,29 +40,31 @@ public class AccountServiceTests {
     @BeforeEach
     public void setVars(){
         log.info("In setVars()");
-        id = "12345";
+        account_id = "12345";
         balance = 0;
         active = false;
-        c = null;
+        customer_id = "10101";
+        c.setId("10101");
+        c.setName("phil");
+        c.setPassword("dog");
     }
 
     @Test
-	public Account testCreateAccount(String id, float balance, boolean active,
-        Customer c) {
+	public void testCreateAccount() {
         log.info("In testCreateAccount()");
-
+        
         // object existing only in this scope
-        Account a = new Account(id, balance, active, c);
+        Account a = new Account(account_id, balance, active, c);
 
         // object being written to the database
-        accountServ.createAccount(id, balance, active, c);
+        accountServ.createAccount(account_id, balance, active, c);
         
         try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
 			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setString(1, id);
+			statement.setString(1, account_id);
 			
 			ResultSet result = statement.executeQuery();
 			
@@ -84,34 +87,35 @@ public class AccountServiceTests {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
  
-    @Test
-	public void add(Account account, int amount) {
-		account.setBalance(account.getBalance() + amount);
-	}
+     @Test
+	 public void add() {
+        log.info("In add()");
 
-    @Test
-	public void subtract(Account account, int amount) {
-		account.setBalance(account.getBalance() - amount);
-	}
+	 	assertEquals(1,1);
+	 }
 
-    @Test
-	public void updateAccount(Account x){
-		// if account == null, init account
+    // @Test
+	// public void subtract(Account account, int amount) {
+	// 	account.setBalance(account.getBalance() - amount);
+	// }
+
+    // @Test
+	// public void updateAccount(Account x){
+	// 	// if account == null, init account
 		
-	}
+	// }
 
-    @AfterEach
-    public void clearResults(){
+    // @AfterEach
+    // public void clearResults(){
 
-    }
+    // }
 
-    @AfterAll
-    public static void clearAccountServ(){
-        accountServ = null;
-        log.info("in clearAccountServ");
-    }
+    // @AfterAll
+    // public static void clearAccountServ(){
+    //     accountServ = null;
+    //     log.info("in clearAccountServ");
+    // }
 
 }

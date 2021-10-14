@@ -9,6 +9,9 @@ it's possible the customer will log in to the wrong account
 Although accessing them would be unlikely as the interface only displays 
 customer's bank accounts, no others. 
 
+- in the customer interface, the customer can access inactive accounts if they know 
+their id. Again, unlikely as the id is never presented to them until the acccount is active
+
 - Encryption of password only reverses the password. The Encryption class is it's own file
 though so updating it to perform a standard of encryption shouldn't be too much more work
 
