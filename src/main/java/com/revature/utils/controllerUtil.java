@@ -189,7 +189,7 @@ public abstract class ControllerUtil {
 		System.out.println("Here are all the Accounts:");
 		List<Account> list = accountService.getAllAccounts();
 		for(Account a:list) {
-			System.out.println(a);
+			System.out.println(a.getCustomer().getName() +": " + a);
 		}
 	}
 
@@ -263,11 +263,13 @@ public abstract class ControllerUtil {
 		System.out.println("Please enter the Customer's ID: ");
 		String customerID = scan.nextLine();
 		Customer c = findByCustomerID(customerID);
-		deleteAllCustomerAccounts(c);
+		// to avoid reference error, first del all accounts
+		// connected with customer before del profile
+		delAllCustAccounts(c);
 		customerService.remove(c);
 	}
 
-	public void deleteAllCustomerAccounts(Customer c){
+	public void delAllCustAccounts(Customer c){
 		List<Account> list = accountService.getAllAccounts();
 		for (Account a:list) {
 			if ((a.getCustomer().getId()).equals(c.getId())) {
