@@ -3,7 +3,7 @@ A command line banking app.
 Limitations and Vulnerabilities:
 
 - during login, if a customer has the same name and password as another customer,
-it's possible the customer will login to the wrong account
+it's possible the customer will log in to the wrong account
 
 - in the customer interface, the customer has access to other customer accounts. 
 Although accessing them would be unlikely as the interface only displays 
