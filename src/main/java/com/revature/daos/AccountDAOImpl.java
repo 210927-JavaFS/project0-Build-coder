@@ -38,7 +38,7 @@ public class AccountDAOImpl implements AccountDAO{
 			while(result.next()) {
 				Account account = new Account(
 						result.getString("account_id"), 
-						result.getInt("account_balance"),
+						result.getFloat("account_balance"),
 						result.getBoolean("account_active"),
 						null
 						);

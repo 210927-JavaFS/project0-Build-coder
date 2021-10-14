@@ -8,7 +8,8 @@ public class MainMenuController {
 
 		boolean running = true;
 
-		System.out.println("Welcome to LegacyBanking, your headache awaits...");
+		System.out.println();
+		System.out.println("Welcome to LegacyBanking, where your money is our legacy");
 
 		do { 
 			Scanner scan = new Scanner(System.in);

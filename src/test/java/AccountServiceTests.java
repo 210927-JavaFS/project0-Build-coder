@@ -1,7 +1,15 @@
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.revature.daos.AccountDAOImpl;
-import com.revature.models.Account;
+import com.revature.models.*;
 import com.revature.services.AccountService;
+import com.revature.utils.ConnectionUtil;
 
 import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterAll;
@@ -14,67 +22,96 @@ import org.slf4j.LoggerFactory;
 
 public class AccountServiceTests {
     
-    // public static AccountService accountServ; 
-    // public static int i, j, k, result;
-    // public static Logger log = LoggerFactory.getLogger(AccountServiceTests.class);
+    public static AccountService accountServ; 
+    public static Logger log = LoggerFactory.getLogger(AccountServiceTests.class);
 
-    // @BeforeAll
-    // public static void setAccountServ(){
-    //     log.info("In method 'setAccountServ'");
-    //     accountServ = new AccountService();
-    // }
+    public static String id = "12345";
+    public static float balance = 0;
+    public static boolean active = false;
+    public static Customer c = null;
 
-    // @BeforeEach
-    // public void setVars(){
-    //     i = 7;
-    //     j = 5;
-    //     k = 0;
-    // }
-    
+    @BeforeAll
+    public static void setAccountServ(){
+        log.info("In setAccountServ()");
+        accountServ = new AccountService();
+    }
 
-    // @Test
-	// public Account createAccount(String name, String accountID, int balance, boolean active) {
-    //     log.info("In method 'createAccount'");
-	// 	return new Account(name, accountID, balance, active);
-	// }
+    @BeforeEach
+    public void setVars(){
+        log.info("In setVars()");
+        id = "12345";
+        balance = 0;
+        active = false;
+        c = null;
+    }
+
+    @Test
+	public Account testCreateAccount(String id, float balance, boolean active,
+        Customer c) {
+        log.info("In testCreateAccount()");
+
+        // object existing only in this scope
+        Account a = new Account(id, balance, active, c);
+
+        // object being written to the database
+        accountServ.createAccount(id, balance, active, c);
+        
+        try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
+			String sql = "SELECT * FROM accounts WHERE account_id = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			Account account = new Account();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) 
+            //that can be used with a while loop to iterate through all the data. 
+			
+			if(result.next()) {
+				
+				account.setAccountID(result.getString("account_id"));
+				account.setBalance(result.getFloat("account_balance"));
+				account.setActive(result.getBoolean("account_active"));
+				account.setCustomerID(result.getString("customer_id"));
+			}
+			
+            // assert that object in scope is equal to object in database
+			assertEquals(a, account);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
  
-    // @Test
-	// public void add(Account account, int amount) {
-	// 	account.setBalance(account.getBalance() + amount);
-	// }
+    @Test
+	public void add(Account account, int amount) {
+		account.setBalance(account.getBalance() + amount);
+	}
 
-    // @Test
-	// public void subtract(Account account, int amount) {
-	// 	account.setBalance(account.getBalance() - amount);
-	// }
-    // @Test
+    @Test
+	public void subtract(Account account, int amount) {
+		account.setBalance(account.getBalance() - amount);
+	}
 
-    // public void addToList(Account x, ArrayList<Account>bankAccounts){
-	// 	// allAccounts.add(x);
-	// 	bankAccounts.add(x);
-    // }
-
-    // @Test
-	// public void updateAccount(Account x){
-	// 	// if account == null, init account
+    @Test
+	public void updateAccount(Account x){
+		// if account == null, init account
 		
-	// }
+	}
 
-    // @Test
-	// public void save(Account account) {
-	// 	AccountDAOImpl accountDAO = new AccountDAOImpl();
-    //     accountDAO.writeAccount(account);
-	// }
+    @AfterEach
+    public void clearResults(){
 
-    // @AfterEach
-    // public void clearResults(){
+    }
 
-    // }
-
-    // @AfterAll
-    // public static void clearAccountServ(){
-    //     accountServ = null;
-    //     log.info("in clearAccountServ");
-    // }
+    @AfterAll
+    public static void clearAccountServ(){
+        accountServ = null;
+        log.info("in clearAccountServ");
+    }
 
 }

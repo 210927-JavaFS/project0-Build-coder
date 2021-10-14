@@ -98,6 +98,9 @@ public abstract class ControllerUtil {
 	 * If two users have the same name and password
 	 * (should be unlikely) method will only return 
 	 * the customer id of whichever entry is first
+	 * in database. Not sure how to avoid this other
+	 * than by adding another identifier like a pin 
+	 * number
 	 * 
 	 * @param name
 	 * @param password
