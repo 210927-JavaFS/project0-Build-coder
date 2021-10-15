@@ -1,7 +1,7 @@
 package com.revature.daos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 import com.revature.models.*;
 import com.revature.utils.ConnectionUtil;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class AccountDAOImpl implements AccountDAO{
 	
-	private static Logger log = LoggerFactory.getLogger(AccountDAOImpl.class);
+	// private static Logger log = LoggerFactory.getLogger(AccountDAOImpl.class);
 	private CustomerDAO customerDAO = new CustomerDAOImpl();
 
 	@Override
@@ -103,7 +103,8 @@ public class AccountDAOImpl implements AccountDAO{
 
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+		
 		return false;
 	}
 
@@ -135,7 +136,8 @@ public class AccountDAOImpl implements AccountDAO{
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+
 		return null;
 	}
 
@@ -160,7 +162,8 @@ public class AccountDAOImpl implements AccountDAO{
 
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+
 		return false;
 	}
 

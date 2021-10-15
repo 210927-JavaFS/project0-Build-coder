@@ -51,9 +51,11 @@ public class CustomerServiceTests {
         active = false;
         customer_id = "10101";
         name = "phil";
+        password = "dog";
+        encryptPass = "god";
         amount = 25;
         profiles = new ArrayList<>();
-        c = new Customer("10101","phil","dog");
+        c = new Customer(customer_id,name,password);
 
         // control object - exists only in this file
         a = new Account(account_id, balance, active, c); 
@@ -95,9 +97,9 @@ public class CustomerServiceTests {
         }
 
         // add 3 new accounts (they don't seem to be added for some reason)
-        customerServ.createAccount("12345", "bill", "dog", "god");
-        customerServ.createAccount("12345", "bill", "dog", "god");
-        customerServ.createAccount("12345", "bill", "dog", "god");
+        customerServ.createAccount("12345", "bob", "dog", "god");
+        customerServ.createAccount("54321", "bill", "dog", "god");
+        customerServ.createAccount("11234", "tim", "dog", "god");
 
         profiles = customerServ.getAllProfiles();
 

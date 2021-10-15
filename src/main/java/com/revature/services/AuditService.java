@@ -18,4 +18,8 @@ public class AuditService {
     public List<Audit> getAllAudits(){
         return auditDAO.findAll();
     }
+
+    public void remove(Audit a){
+        auditDAO.removeAudit(a);
+    }
 }

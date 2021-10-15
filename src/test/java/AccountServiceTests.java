@@ -33,6 +33,8 @@ public class AccountServiceTests {
     public static Account a;
     public static float amount;
     public static List<Account> accounts;
+    String name;
+    String password;
 
     @BeforeAll
     public static void createObjects(){
@@ -46,10 +48,12 @@ public class AccountServiceTests {
         account_id = "12345";
         balance = 50;
         active = false;
+        name = "phil";
         customer_id = "10101";
+        password = "dog";
         amount = 25;
         accounts = new ArrayList<>();
-        c = new Customer("10101","phil","dog");
+        c = new Customer(customer_id,name,password);
 
         // control object - exists only in this file
         a = new Account(account_id, balance, active, c); 

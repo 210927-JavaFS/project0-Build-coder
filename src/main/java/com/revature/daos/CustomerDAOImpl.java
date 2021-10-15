@@ -9,15 +9,15 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 import com.revature.models.Customer;
 import com.revature.utils.ConnectionUtil;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	
-	private static Logger log = LoggerFactory.getLogger(CustomerDAOImpl.class);
+	// private static Logger log = LoggerFactory.getLogger(CustomerDAOImpl.class);
 
 	// class example
 	@Override
@@ -94,7 +94,8 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+
 		return false;
 	}
 	@Override
@@ -124,7 +125,8 @@ public class CustomerDAOImpl implements CustomerDAO{
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+		
 		return null;
 	}
 }

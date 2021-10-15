@@ -31,7 +31,8 @@ public class ManagerController extends ControllerUtil {
 			System.out.println("6: Transfer");
 			System.out.println("7: Cancel Bank Account");
 			System.out.println("8: Cancel Customer Profile");
-			System.out.println("Enter any key that's not 1-8 to quit");
+			System.out.println("9: View Audits");
+			System.out.println("Enter any key that's not 1-9 to quit");
 			System.out.println();
 			
 			int response = scan.nextInt();
@@ -66,6 +67,9 @@ public class ManagerController extends ControllerUtil {
 				case 8:
 					viewProfiles();
 					cancelProfile();
+					break;
+				case 9:
+					viewAudits();
 					break;
 
 				default:

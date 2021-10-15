@@ -9,4 +9,6 @@ public interface AuditDAO {
     public List<Audit> findAll();
 
     public boolean addAudit(Audit a);
+
+    public boolean removeAudit(Audit a);
 }

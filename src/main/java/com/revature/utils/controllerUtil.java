@@ -145,60 +145,71 @@ public abstract class ControllerUtil {
 	}
 
 	public void deposit(){
-		scan = createScanner();
-		System.out.println("Which account would you like to deposit money in?");
-		System.out.println("Please enter the Account's ID: ");
-		String accountID = scan.nextLine();
-		Account account = findByAccountID(accountID);
-		System.out.println("How much would you like to deposit?");
 		try {
+			scan = createScanner();
+			System.out.println("Which account would you like to deposit money in?");
+			System.out.println("Please enter the Account's ID: ");
+			String accountID = scan.nextLine();
+			Account account = findByAccountID(accountID);
+			System.out.println("How much would you like to deposit?");
 			float amount = scan.nextFloat();
+			accountService.add(account, amount);
 			// if amount is suspiciously large, hit em' w/an audit!
 			if (amount>10000) {
 				String id = UUID.randomUUID().toString();
 				id = cutString(id);
 				auditService.createAudit(id, account);
 			}
-			accountService.add(account, amount);
-		} catch (InputMismatchException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.out.println("You must enter a number");
+			System.out.println("Account not found");
+		} catch (InputMismatchException e){
+			e.printStackTrace();
+			System.out.println("You must enter a number for account id");
 		}
 	}
 
 	public void withdraw(){
-		scan = createScanner();
-		System.out.println("Which account would you like to withdraw money from?");
-		System.out.println("Please enter the Account's ID: ");
-		String accountID = scan.nextLine();
-		Account account = findByAccountID(accountID);
-		System.out.println("How much would you like to withdraw?");
+	
 		try {
+			scan = createScanner();
+			System.out.println("Which account would you like to withdraw money from?");
+			System.out.println("Please enter the Account's ID: ");
+			String accountID = scan.nextLine();
+			Account account = findByAccountID(accountID);
+			System.out.println("How much would you like to withdraw?");
+			
 			float amount = scan.nextFloat();
 			accountService.subtract(account, amount);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println("Account was not found");
 		} catch (InputMismatchException e) {
 			e.printStackTrace();
-			System.out.println("You must enter a number");
+			System.out.println("You must enter a number for account id");
 		}
 	}
 
 	public void transfer(){
-		scan = createScanner();
-		System.out.println("Which account do you want to transfer money from?");
-		System.out.println("Please enter the Account's ID: ");
-		String fromAccountID = scan.nextLine();
-		Account fromAccount = findByAccountID(fromAccountID);
-		System.out.println("Which account would you like to transfer the money to?");
-		String toAccountID = scan.nextLine();
-		Account toAccount = findByAccountID(toAccountID);
-		System.out.println("How much would you like to transfer?");
 		try {
+			scan = createScanner();
+			System.out.println("Which account do you want to transfer money from?");
+			System.out.println("Please enter the Account's ID: ");
+			String fromAccountID = scan.nextLine();
+			Account fromAccount = findByAccountID(fromAccountID);
+			System.out.println("Which account would you like to transfer the money to?");
+			String toAccountID = scan.nextLine();
+			Account toAccount = findByAccountID(toAccountID);
+			System.out.println("How much would you like to transfer?");
 			float amount = scan.nextFloat();
 			accountService.subtract(fromAccount, amount);
 			accountService.add(toAccount, amount);
-		} catch (InputMismatchException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.out.println("You must enter a number");
+			System.out.println("Account not found");
+		} catch (InputMismatchException e){
+			e.printStackTrace();
+			System.out.println("You must enter a number for account id");
 		}
 	}
 
@@ -229,6 +240,15 @@ public abstract class ControllerUtil {
 				System.out.println(a);
 			}
 		}
+		System.out.println();
+	}
+
+	public void viewAudits(){
+		System.out.println("Here are all your Audits:");
+		List<Audit> list = auditService.getAllAudits();
+		for (Audit a:list) {
+				System.out.println(a);
+			}
 		System.out.println();
 	}
 
@@ -289,6 +309,7 @@ public abstract class ControllerUtil {
 			System.out.println("Please enter the Account's ID: ");
 			String accountID = scan.nextLine();
 			Account account = findByAccountID(accountID);
+			delAllAudits(account);
 			accountService.remove(account);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -307,7 +328,7 @@ public abstract class ControllerUtil {
 			// connected with customer before del profile
 			delAllCustAccounts(c);
 			customerService.remove(c);
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.out.println("Could not find profile");
 		}
@@ -318,6 +339,15 @@ public abstract class ControllerUtil {
 		for (Account a:list) {
 			if ((a.getCustomer().getId()).equals(c.getId())) {
 				accountService.remove(a);
+			}
+		}
+	}
+
+	public void delAllAudits(Account ac){
+		List<Audit> list = auditService.getAllAudits();
+		for (Audit au:list) {
+			if ((au.getAccount().getAccountID().equals(ac.getAccountID()))) {
+				auditService.remove(au);
 			}
 		}
 	}

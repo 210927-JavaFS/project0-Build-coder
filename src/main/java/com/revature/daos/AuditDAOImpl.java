@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.models.Account;
 import com.revature.models.Audit;
 import com.revature.utils.ConnectionUtil;
 
@@ -50,7 +51,8 @@ public class AuditDAOImpl implements AuditDAO {
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+
 		return null;
     }
 
@@ -77,4 +79,25 @@ public class AuditDAOImpl implements AuditDAO {
 		}
 		return false;
     }
+
+	@Override
+	public boolean removeAudit(Audit a) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+
+			String sql = "DELETE FROM audits WHERE audit_id = ?";
+				
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setObject(1, a.getAudit_id());
+		
+			statement.execute();
+			
+			return true;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		return false;
+	}
 }

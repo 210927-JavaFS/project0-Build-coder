@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.revature.models.*;
-import com.revature.services.CustomerService;
+import com.revature.services.AuditService;
 import com.revature.utils.ConnectionUtil;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -22,7 +22,7 @@ public class AuditServiceTests {
     
     public static Logger log = LoggerFactory.getLogger(AccountServiceTests.class);
 
-    public static CustomerService customerServ; 
+    public static AuditService auditServ; 
     public static String account_id;
     public static float balance;
     public static boolean active;
@@ -30,15 +30,18 @@ public class AuditServiceTests {
     public static Customer c;
     public static Account a;
     public static float amount;
-    public static List<Customer> profiles;
+    public static List<Audit> audits;
     String name;
     String password;
     String encryptPass;
+    String audit_id;
+    Account account;
+
 
     @BeforeAll
     public static void createObjects(){
         log.info("In createObjects()");
-        customerServ = new CustomerService();
+        auditServ = new AuditService();
     }
 
     @BeforeEach
@@ -49,15 +52,18 @@ public class AuditServiceTests {
         active = false;
         customer_id = "10101";
         name = "phil";
+        password = "dog";
         amount = 25;
-        profiles = new ArrayList<>();
-        c = new Customer("10101","phil","dog");
+        audits = new ArrayList<>();
+        audit_id = "55555";
+        c = new Customer(customer_id,name,password);
+        account = new Account(account_id, balance, active, c);
 
         // control object - exists only in this file
-        a = new Account(account_id, balance, active, c); 
+        a = new Account(audit_id, balance, active, c); 
 
         // test object - writes to database
-        customerServ.createAccount(customer_id, name, password, encryptPass);
+        auditServ.createAudit(audit_id, account);
 
         // both control and test are init with same values
         // they share the same id so db should recognize them as 
@@ -70,9 +76,9 @@ public class AuditServiceTests {
          * but is 'c' from the db or local?
          */
         log.info("In testCreateAudit()");
-        customerServ.createAccount(customer_id, name, password, encryptPass);
+        auditServ.createAudit(audit_id, account);
 
-        assertEquals(customer_id, c.getId());
+        assertEquals(audit_id, account.getAccountID());
     }
  
 	@Test
@@ -93,13 +99,13 @@ public class AuditServiceTests {
         }
 
         // add 3 new accounts (they don't seem to be added for some reason)
-        customerServ.createAccount("12345", "bill", "dog", "god");
-        customerServ.createAccount("12345", "bill", "dog", "god");
-        customerServ.createAccount("12345", "bill", "dog", "god");
+        auditServ.createAudit("54321", account);
+        auditServ.createAudit("54322", account);
+        auditServ.createAudit("54333", account);
 
-        profiles = customerServ.getAllProfiles();
+        audits = auditServ.getAllAudits();
 
         // assert that all 3 accounts were retrieved by getAllAccounts()
-        assertEquals(3, profiles.size());
+        assertEquals(3, audits.size());
 	}
 }
