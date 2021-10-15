@@ -8,7 +8,6 @@ import java.util.List;
 import com.revature.services.*;
 import com.revature.models.*;
 
-
 public abstract class ControllerUtil {
 
 	private static CustomerService customerService = new CustomerService();
@@ -116,6 +115,7 @@ public abstract class ControllerUtil {
 				return c.getId();
 			}
 		}
+		System.out.println("Could not find profile");
 		return "";
 	}
 
@@ -150,8 +150,13 @@ public abstract class ControllerUtil {
 		String accountID = scan.nextLine();
 		Account account = findByAccountID(accountID);
 		System.out.println("How much would you like to deposit?");
-		float amount = scan.nextFloat();
-		accountService.add(account, amount);
+		try {
+			float amount = scan.nextFloat();
+			accountService.add(account, amount);
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+			System.out.println("You must enter a number");
+		}
 	}
 
 	public void withdraw(){
@@ -161,8 +166,13 @@ public abstract class ControllerUtil {
 		String accountID = scan.nextLine();
 		Account account = findByAccountID(accountID);
 		System.out.println("How much would you like to withdraw?");
-		float amount = scan.nextFloat();
-		accountService.subtract(account, amount);
+		try {
+			float amount = scan.nextFloat();
+			accountService.subtract(account, amount);
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+			System.out.println("You must enter a number");
+		}
 	}
 
 	public void transfer(){
@@ -175,9 +185,14 @@ public abstract class ControllerUtil {
 		String toAccountID = scan.nextLine();
 		Account toAccount = findByAccountID(toAccountID);
 		System.out.println("How much would you like to transfer?");
-		float amount = scan.nextFloat();
-		accountService.subtract(fromAccount, amount);
-		accountService.add(toAccount, amount);
+		try {
+			float amount = scan.nextFloat();
+			accountService.subtract(fromAccount, amount);
+			accountService.add(toAccount, amount);
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+			System.out.println("You must enter a number");
+		}
 	}
 
 	// class example
@@ -211,26 +226,32 @@ public abstract class ControllerUtil {
 	}
 
 	public void activateAccount(){
-		scan = createScanner();
-		System.out.println("Which account would you like to activate?");
-		String accountID = scan.nextLine();
-		Account a = findByAccountID(accountID);
-		boolean active = a.isActive();
-
-		if (!active) {
+		try {
 			scan = createScanner();
-			System.out.println("Do you want to activate account: " + a + "?");
-			System.out.println("Type 'yes' or 'no");
-			String response = scan.nextLine();
-			
-			if (response.equals("yes")) {
-				accountService.updateAccountStatus(a);
-				System.out.println("Account: " + a + " is now active");
+			System.out.println("Which account would you like to activate?");
+			String accountID = scan.nextLine();
+			Account a = findByAccountID(accountID);
+			boolean active = a.isActive();
+
+			if (!active) {
+				scan = createScanner();
+				System.out.println("Do you want to activate account: " + a + "?");
+				System.out.println("Type 'yes' or 'no");
+				String response = scan.nextLine();
+				
+				if (response.equals("yes")) {
+					accountService.updateAccountStatus(a);
+					System.out.println("Account: " + a + " is now active");
+				} else{
+					System.out.println("Account: " + a + " remains inactive");
+				}
 			} else{
-				System.out.println("Account: " + a + " remains inactive");
+				System.out.println("Account is active");
 			}
-		} else{
-			System.out.println("Account is active");
+			
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println("Could not find account");
 		}
 	}
 	
@@ -253,27 +274,36 @@ public abstract class ControllerUtil {
 		
 		return newStr;
 	}
-
 	
 	public void cancelAccount(){
-		scan = createScanner();
-		System.out.println("Which account would you like to cancel?");
-		System.out.println("Please enter the Account's ID: ");
-		String accountID = scan.nextLine();
-		Account account = findByAccountID(accountID);
-		accountService.remove(account);
+		try {
+			scan = createScanner();
+			System.out.println("Which account would you like to cancel?");
+			System.out.println("Please enter the Account's ID: ");
+			String accountID = scan.nextLine();
+			Account account = findByAccountID(accountID);
+			accountService.remove(account);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println("Could not find account");
+		}
 	}
 
 	public void cancelProfile(){
-		scan = createScanner();
-		System.out.println("Which account would you like to cancel?");
-		System.out.println("Please enter the Customer's ID: ");
-		String customerID = scan.nextLine();
-		Customer c = findByCustomerID(customerID);
-		// to avoid reference error, first del all accounts
-		// connected with customer before del profile
-		delAllCustAccounts(c);
-		customerService.remove(c);
+		try {
+			scan = createScanner();
+			System.out.println("Which account would you like to cancel?");
+			System.out.println("Please enter the Customer's ID: ");
+			String customerID = scan.nextLine();
+			Customer c = findByCustomerID(customerID);
+			// to avoid reference error, first del all accounts
+			// connected with customer before del profile
+			delAllCustAccounts(c);
+			customerService.remove(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Could not find profile");
+		}
 	}
 
 	public void delAllCustAccounts(Customer c){
