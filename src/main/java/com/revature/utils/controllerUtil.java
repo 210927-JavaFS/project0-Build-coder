@@ -12,6 +12,7 @@ public abstract class ControllerUtil {
 
 	private static CustomerService customerService = new CustomerService();
 	private static AccountService accountService = new AccountService();
+	private static AuditService auditService = new AuditService();
 	private static EncryptionUtil encryptionUtil = new EncryptionUtil();
 
 	private static boolean running = true;
@@ -152,6 +153,12 @@ public abstract class ControllerUtil {
 		System.out.println("How much would you like to deposit?");
 		try {
 			float amount = scan.nextFloat();
+			// if amount is suspiciously large, hit em' w/an audit!
+			if (amount>10000) {
+				String id = UUID.randomUUID().toString();
+				id = cutString(id);
+				auditService.createAudit(id, account);
+			}
 			accountService.add(account, amount);
 		} catch (InputMismatchException e) {
 			e.printStackTrace();
