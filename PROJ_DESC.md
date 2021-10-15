@@ -1,5 +1,7 @@
 A command line banking app. 
 
+SQL script is located in java/com/revature/resources
+
 Limitations and Vulnerabilities:
 
 - during login, if a customer has the same name and password as another customer,
