@@ -78,7 +78,6 @@ public class CustomerController extends ControllerUtil {
 			try {
 				id = createProfile();
 			} catch (Exception e) {
-				//TODO: handle exception
 				System.out.println(e.getMessage());
 			}
 		}
